@@ -6,9 +6,9 @@ const Home = () => <MaterialIcons name="delete" size={16} />;
 const Edit = () => <MaterialIcons name="edit" size={16} />;
 const Submit = () => <MaterialIcons name="check" size={16} />;
 // Composable Icons for the screens(:
-Icons.Add = logIn;
+Icons.logIn = logIn;
 Icons.Close = SignUp;
-Icons.Delete = Home;
+Icons.Home = Home;
 Icons.Edit = Edit;
 Icons.Submit = Submit;
 export default Icons;
