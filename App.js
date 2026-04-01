@@ -28,7 +28,7 @@ export const App = () => {
           component={HomeScreen}
           options={{ title: "Create an account" }}
         />
-        
+
       </Stack.Navigator>
     </NavigationContainer>
   );
