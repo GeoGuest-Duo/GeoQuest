@@ -26,7 +26,7 @@ export const App = () => {
         <Stack.Screen
           name="HomeScreen"
           component={HomeScreen}
-          options={{ title: "Create an account" }}
+          options={{ title: "Welcome to GeoQuest" }}
         />
 
       </Stack.Navigator>

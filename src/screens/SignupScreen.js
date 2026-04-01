@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 
-const SignupScreen = () => {
+const SignupScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Text>Create an account</Text>

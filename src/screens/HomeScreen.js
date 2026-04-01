@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Text>Welcome to GeoQuest</Text>
