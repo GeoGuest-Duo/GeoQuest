@@ -39,11 +39,12 @@ const LoginScreen = ({ navigation }) => {
     const users = response.result;
     const matchedUser = users.find(
       (user) =>
-        user.UserUsername === username && user.UserPassword === password,
+        user.UserUsername === username.trim() &&
+        user.UserPassword === password.trim(),
     );
 
     if (matchedUser) {
-      navigation.replace("HomeScreen", { user: matchedUser });
+      navigation.navigate("HomeScreen", { user: matchedUser });
       console.log("Login success");
     } else {
       Alert.alert("Login Failed", "Invalid username or password");
@@ -68,7 +69,7 @@ const LoginScreen = ({ navigation }) => {
         style={styles.inputField}
       />
 
-      <Button label="Login" onClick={handleLogin} />
+      <Button label="Login" onPress={handleLogin} />
       <Pressable
         style={styles.signUpText}
         onPress={() => navigation.navigate("SignupScreen")}>
