@@ -41,7 +41,7 @@ const HomeScreen = ({ route, navigation }) => {
       <View style={styles.buttons}>
         <Button
           label="View Events"
-          onClick={() => navigation.navigate("EventsScreen")}
+          onClick={() => navigation.navigate("EventScreen")}
         />
         <Button
           label="Open Map"
