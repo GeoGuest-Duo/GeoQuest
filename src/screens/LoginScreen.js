@@ -69,7 +69,7 @@ const LoginScreen = ({ navigation }) => {
         style={styles.inputField}
       />
 
-      <Button label="Login" onPress={handleLogin} />
+      <Button label="Login" onClick={handleLogin} />
       <Pressable
         style={styles.signUpText}
         onPress={() => navigation.navigate("SignupScreen")}>
