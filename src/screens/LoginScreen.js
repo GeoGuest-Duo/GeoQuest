@@ -7,7 +7,7 @@ import useStore from "../store/useStore";
 const LoginScreen = ({ navigation }) => {
     // Initialisations ---------------------
     const usersEndpoint = "https://mark0s.com/geoquest/v1/api/users?key=16gv8f";
-    const loggedinUserKey = "loggedinUser";
+    const loggedinUserKey = "loggedinUser"; 
 
     // State -------------------------------
     const [users, setUsers, isUsersLoading, loadUsers] = useLoad(usersEndpoint)
