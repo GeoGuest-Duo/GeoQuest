@@ -2,15 +2,18 @@ import { Alert, Pressable, StyleSheet, Text, TextInput, View } from "react-nativ
 import { Button } from "../UI/Button";
 import { useState } from "react";
 import useLoad from "../API/useLoad";
+import useStore from "../store/useStore";
 
 const LoginScreen = ({ navigation }) => {
     // Initialisations ---------------------
     const usersEndpoint = "https://mark0s.com/geoquest/v1/api/users?key=16gv8f";
+    const loggedinUserKey = "loggedinUser";
 
     // State -------------------------------
     const [users, setUsers, isUsersLoading, loadUsers] = useLoad(usersEndpoint)
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [loggedinUser, saveLoggedinUser] = useStore(loggedinUserKey, null) // key = loggedinUser, value = null/matchedUser
 
     // Handlers ----------------------------
     const handleLogin = async () => {
@@ -35,6 +38,7 @@ const LoginScreen = ({ navigation }) => {
 
         if (matchedUser) {
             console.log("Login success");
+            saveLoggedinUser(matchedUser);
             navigation.replace("HomeScreen", { user: matchedUser });
         } else {
         Alert.alert("Login Failed", "Invalid username or password");

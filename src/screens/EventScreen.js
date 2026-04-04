@@ -1,10 +1,7 @@
-import { useEffect, useState } from "react";
 import { ActivityIndicator, Alert, FlatList, StyleSheet, Text, View } from "react-native";
 import { Button } from "../UI/Button";
-import API from "../API/API";
 import useLoad from "../API/useLoad";
 
-// Event Endpoint
 const EventsScreen = ({ navigation }) => {
   // Initialisations ---------------------
   const eventsEndpoint = "https://mark0s.com/geoquest/v1/api/events?key=16gv8f";
@@ -12,10 +9,10 @@ const EventsScreen = ({ navigation }) => {
   // State -------------------------------
   const [events, setEvents, isEventsLoading, loadEvents] = useLoad(eventsEndpoint)
 
-    // Keep only public events
-    const publicEvents = events.filter(
-      (event) => event.EventIspublic === true,
-    );
+  // Keep only public events
+  const publicEvents = events.filter(
+    (event) => event.EventIspublic === true,
+  );
 
   // Handlers ----------------------------
   // here is showing the  Function to render each event card,
