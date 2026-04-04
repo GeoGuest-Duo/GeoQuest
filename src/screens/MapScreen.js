@@ -5,32 +5,23 @@ import * as Location from "expo-location";
 
 const MapScreen = () => {
   // State -------------------------------
-  // Stores user's GPS location
+  // Store the user's current GPS coordinates
   const [location, setLocation] = useState(null);
 
-  // Stores permission or loading errors
+  // Store all caches loaded from the GeoQuest API
+  const [caches, setCaches] = useState([]);
+
+  // Store any error message
   const [errorMessage, setErrorMessage] = useState("");
 
-  // Temporary cache data (replace with API later)
-  const caches = [
-    {
-      id: 1,
-      name: "Riverside Cache",
-      description: "A nearby hidden cache",
-      latitude: 51.5075,
-      longitude: -0.5815,
-    },
-    {
-      id: 2,
-      name: "Campus Corner Cache",
-      description: "Treasure near campus",
-      latitude: 51.5062,
-      longitude: -0.5798,
-    },
-  ];
+  // Store cache loading state
+  const [isLoadingCaches, setIsLoadingCaches] = useState(true);
+
+  // GeoQuest API endpoint for caches
+  const cachesEndpoint = "https://mark0s.com/geoquest/v1/api/caches?key=16gv8f";
 
   // Effect ------------------------------
-  // Request location permission and get current GPS position
+  // Ask for location permission and get current user position
   useEffect(() => {
     const getLocation = async () => {
       const { status } = await Location.requestForegroundPermissionsAsync();
@@ -47,7 +38,26 @@ const MapScreen = () => {
     getLocation();
   }, []);
 
-  // Loading / Error handling ------------
+  // Effect ------------------------------
+  // Load caches from the GeoQuest API
+  useEffect(() => {
+    const loadCaches = async () => {
+      try {
+        const response = await fetch(cachesEndpoint);
+        const data = await response.json();
+        setCaches(Array.isArray(data) ? data : []);
+      } catch (error) {
+        console.log("Error loading caches:", error);
+        setErrorMessage("Unable to load caches.");
+      } finally {
+        setIsLoadingCaches(false);
+      }
+    };
+
+    loadCaches();
+  }, []);
+
+  // Loading / error states --------------
   if (errorMessage) {
     return (
       <View style={styles.centerContainer}>
@@ -56,7 +66,7 @@ const MapScreen = () => {
     );
   }
 
-  if (!location) {
+  if (!location || isLoadingCaches) {
     return (
       <View style={styles.centerContainer}>
         <ActivityIndicator size="large" />
@@ -68,35 +78,36 @@ const MapScreen = () => {
   // View --------------------------------
   return (
     <View style={styles.container}>
-      {/* Interactive map centered on user's location */}
+      {/* Full interactive map centered on the user's current location */}
       <MapView
         style={styles.map}
         region={{
           latitude: location.latitude,
           longitude: location.longitude,
-          latitudeDelta: 0.01,
-          longitudeDelta: 0.01,
+          latitudeDelta: 0.02,
+          longitudeDelta: 0.02,
         }}
         showsUserLocation={true}>
-        {/* Marker for user's current position */}
+        {/* Marker showing the user's current location */}
         <Marker
           coordinate={{
             latitude: location.latitude,
             longitude: location.longitude,
           }}
           title="You are here"
+          description="Your current GPS position"
         />
 
-        {/* Markers for nearby caches */}
+        {/* Markers for all caches loaded from the API */}
         {caches.map((cache) => (
           <Marker
-            key={cache.id}
+            key={cache.CacheID}
             coordinate={{
-              latitude: cache.latitude,
-              longitude: cache.longitude,
+              latitude: cache.CacheLatitude,
+              longitude: cache.CacheLongitude,
             }}
-            title={cache.name}
-            description={cache.description}
+            title={cache.CacheName}
+            description={cache.CacheDescription}
           />
         ))}
       </MapView>
@@ -109,17 +120,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-
   centerContainer: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
   },
-
   loadingText: {
     marginTop: 10,
   },
-
   map: {
     flex: 1,
   },
