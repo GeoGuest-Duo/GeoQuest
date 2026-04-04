@@ -4,7 +4,7 @@ import useStore from "../store/useStore";
 
 const HomeScreen = ({ navigation }) => {
   // Initialisations ---------------------
-  // Retrieve logged-in user from AsyncStorage
+  // Retrieve the logged-in user from AsyncStorage
   const [user] = useStore("loggedinUser", null);
 
   // View --------------------------------
@@ -13,35 +13,23 @@ const HomeScreen = ({ navigation }) => {
       {/* Main welcome title */}
       <Text style={styles.title}>Welcome to GeoQuest</Text>
 
-      {/* Personalised greeting using logged-in user's first name */}
+      {/* Personalised greeting using user's first name */}
       <Text style={styles.subtitle}>
-        Hi {user?.UserFirstname}, here are nearby caches.
+        Hi {user?.UserFirstname}, ready to start your treasure hunt?
       </Text>
 
-      {/* Map preview section (placeholder for now) */}
-      {/* Later this will be replaced with a real map component */}
-      <View style={styles.mapBox}>
-        <Text style={styles.mapPlaceholder}>
-          Map preview showing nearby caches
-        </Text>
-      </View>
-
-      {/* Nearby caches section */}
-      {/* Displays a simple list of nearby cache names */}
-      {/* Later this can be replaced with real API data */}
-      <View style={styles.cacheList}>
-        <Text style={styles.sectionTitle}>Nearby Caches</Text>
-
-        <Text style={styles.cacheItem}>• Riverside Cache</Text>
-        <Text style={styles.cacheItem}>• Hidden Oak Cache</Text>
-        <Text style={styles.cacheItem}>• Campus Corner Cache</Text>
-      </View>
-
-      {/* Button to navigate to full interactive map screen */}
+      {/* Navigation buttons for key features */}
       <View style={styles.buttons}>
+        {/* Navigate to Map screen */}
         <Button
-          label="Open Full Map"
+          label="Open Map"
           onClick={() => navigation.navigate("MapScreen")}
+        />
+
+        {/* Navigate to Profile tab */}
+        <Button
+          label="View Profile"
+          onClick={() => navigation.navigate("ProfileTab")}
         />
       </View>
     </View>
@@ -52,6 +40,8 @@ const HomeScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: "center", // vertically center content
+    alignItems: "center", // horizontally center content
     padding: 20,
     backgroundColor: "#fff",
   },
@@ -59,47 +49,18 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 26,
     fontWeight: "bold",
-    marginTop: 20,
-    marginBottom: 8,
+    marginBottom: 10,
   },
 
   subtitle: {
     fontSize: 16,
     color: "gray",
-    marginBottom: 20,
-  },
-
-  mapBox: {
-    height: 220,
-    borderWidth: 1,
-    borderColor: "#ddd",
-    borderRadius: 12,
-    justifyContent: "center",
-    alignItems: "center",
-    marginBottom: 20,
-    backgroundColor: "#f8f8f8",
-  },
-
-  mapPlaceholder: {
-    color: "gray",
-  },
-
-  cacheList: {
-    marginBottom: 20,
-  },
-
-  sectionTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    marginBottom: 10,
-  },
-
-  cacheItem: {
-    fontSize: 15,
-    marginBottom: 6,
+    textAlign: "center",
+    marginBottom: 30,
   },
 
   buttons: {
+    width: "100%",
     gap: 10,
   },
 });

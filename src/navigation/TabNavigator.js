@@ -2,6 +2,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeStack from "./HomeStack";
 import EventScreen from "../screens/EventScreen";
 import ProfileScreen from "../screens/ProfileScreen";
+import MapScreen from "../screens/MapScreen";
 
 const TabNavigator = () => {
   // Initialisations ---------------------
@@ -30,6 +31,13 @@ const TabNavigator = () => {
         name="ProfileTab"
         component={ProfileScreen}
         options={{ title: "Profile" }}
+      />
+      <Tab.Screen
+        name="MapScreen"
+        component={MapScreen}
+        options={{
+          title: "Map",
+        }}
       />
     </Tab.Navigator>
   );
