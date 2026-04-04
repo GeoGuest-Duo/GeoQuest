@@ -1,10 +1,8 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import LoginScreen from "./src/screens/LoginScreen";
-import SignupScreen from "./src/screens/SignupScreen";
-import HomeScreen from "./src/screens/HomeScreen";
-import EventScreen from "./src/screens/EventScreen";
 import useStore from "./src/store/useStore";
+import TabNavigator from "./src/navigation/TabNavigator";
+import AuthStack from "./src/navigation/AuthStack";
 
 const Stack = createNativeStackNavigator();
 
@@ -18,34 +16,21 @@ export const App = () => {
   // View --------------------------------
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="LoginScreen">
+      <Stack.Navigator screenOptions={{headerShown: false}}>
         {loggedinUser === null ? (
           // <>...</> groups multiple <Stack.Screen> components together
           <>
             <Stack.Screen
-              name="LoginScreen"
-              component={LoginScreen}
-              options={{ title: "Login" }}
+              name="Authentication"
+              component={AuthStack}
             />
-
-          <Stack.Screen
-            name="SignupScreen"
-            component={SignupScreen}
-            options={{ title: "Create an account" }}
-          />
-        </>  
+          </>  
         ) : (
         <>
           <Stack.Screen
-            name="HomeScreen"
-            component={HomeScreen}
-            options={{ title: "Welcome to GeoQuest" }}s
+            name="MainScreens"
+            component={TabNavigator}
           />
-          <Stack.Screen
-            name="EventScreen"
-            component={EventScreen}
-            options={{ title: "Events" }}>
-          </Stack.Screen>
         </>
         )}
       </Stack.Navigator>
