@@ -1,44 +1,23 @@
 import { useEffect, useState } from "react";
-import {
-  ActivityIndicator,
-  Alert,
-  FlatList,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { ActivityIndicator, Alert, FlatList, StyleSheet, Text, View } from "react-native";
 import { Button } from "../UI/Button";
 import API from "../API/API";
+import useLoad from "../API/useLoad";
+
 // Event Endpoint
 const EventsScreen = ({ navigation }) => {
+  // Initialisations ---------------------
   const eventsEndpoint = "https://mark0s.com/geoquest/v1/api/events?key=16gv8f";
 
-  const [events, setEvents] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  const fetchEvents = async () => {
-    setIsLoading(true);
-
-    const response = await API.get(eventsEndpoint);
-
-    if (!response.isSuccess) {
-      Alert.alert("Error", response.message || "Could not load events");
-      setIsLoading(false);
-      return;
-    }
+  // State -------------------------------
+  const [events, setEvents, isEventsLoading, loadEvents] = useLoad(eventsEndpoint)
 
     // Keep only public events
-    const publicEvents = response.result.filter(
+    const publicEvents = events.filter(
       (event) => event.EventIspublic === true,
     );
 
-    setEvents(publicEvents);
-    setIsLoading(false);
-  };
-
-  useEffect(() => {
-    fetchEvents();
-  }, []);
+  // Handlers ----------------------------
   // here is showing the  Function to render each event card,
   // showing event details (name, description, dates)
   // and allowing user interaction
@@ -66,17 +45,18 @@ const EventsScreen = ({ navigation }) => {
     conditionally rendering loading state,
      empty state, or a list of events */
   }
+  // View --------------------------------
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Public Events</Text>
 
-      {isLoading ? (
+      {isEventsLoading ? (
         <ActivityIndicator size="large" />
-      ) : events.length === 0 ? (
+      ) : publicEvents.length === 0 ? (
         <Text>No public events found.</Text>
       ) : (
         <FlatList
-          data={events}
+          data={publicEvents}
           keyExtractor={(item) => item.EventID.toString()}
           renderItem={renderEvent}
           contentContainerStyle={styles.list}
