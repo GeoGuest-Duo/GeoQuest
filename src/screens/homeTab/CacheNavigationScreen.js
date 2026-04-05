@@ -1,7 +1,9 @@
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 import { useEffect, useRef, useState } from "react";
 import * as Location from "expo-location";      // Gets the user's GPS location
-import MapView, { Marker } from "react-native-maps";
+import MapView, { Marker, Polyline } from "react-native-maps";
+import { Button } from '../../UI/Button';
+import { Linking } from 'react-native';
 
 
 const calculateDistanceInKm = (startLat, startLong, endLat, endLong) => {
@@ -95,6 +97,14 @@ const CacheNavigationScreen = ({navigation, route}) => {
         )
         : 0;
     
+    const openExternalNavigation = () => {
+        const lat = Number(cache.CacheLatitude);
+        const long = Number(cache.CacheLongitude);
+
+        const url = `https://www.google.com/maps/dir/?api=1&destination=${lat},${long}`;
+        Linking.openURL(url);
+    }
+    
     // Loading / error states --------------
     if (errorMessage) {
         return (
@@ -119,8 +129,9 @@ const CacheNavigationScreen = ({navigation, route}) => {
             <MapView
                 ref={mapRef}
                 style={styles.map}
-                showsUserLocation={true}
+                showsUserLocation={true} // shows user location in blue
             >
+                {/* Marks the cache location */}
                 <Marker
                     coordinate={{
                         latitude: Number(cache.CacheLatitude),
@@ -129,9 +140,35 @@ const CacheNavigationScreen = ({navigation, route}) => {
                     title={cache.CacheName}
                     description={cache.CacheDescription}
                 />
+
+                {/* To connect the two points with a line*/}
+                <Polyline
+                    coordinates={[
+                        {
+                            latitude: location.latitude,
+                            longitude: location.longitude,
+                        },
+                        {
+                            latitude: cache.CacheLatitude,
+                            longitude: cache.CacheLongitude,
+                        },
+                    ]}
+                    strokeWidth={4}
+                    strokeColor='blue'
+                />
             </MapView>
-            <View style={styles.distanceTile}>
-                <Text style={styles.distanceText}>Distance: {distanceInKm.toFixed(2)} KM</Text>
+            <View style={styles.cacheTile}>
+                <Text style={styles.cacheTitle}>{cache.CacheName}</Text>
+                <Text style={styles.detailsText}>Distance: {distanceInKm.toFixed(2)} KM</Text>
+                <Text style={styles.detailsText}>Clue: {cache.CacheClue}</Text>
+                
+                <View style={styles.buttonContainer}>
+                    <Button
+                        label="Open in Maps"
+                        onClick={openExternalNavigation}
+                        style={styles.button}
+                    />
+                </View>
             </View>
         </View>
     );
@@ -152,24 +189,34 @@ const styles = StyleSheet.create({
     loadingText: {
         marginTop: 10,
     },
-    distanceTile: {
+    cacheTile: {
         position: "absolute",
-        top: 20,
-        alignSelf: "center",
+        bottom: 10,
+        left: 15,
+        right: 15,
         backgroundColor: "#fff",
-        paddingVertical: 8,
-        paddingHorizontal: 14,
-        borderRadius: 10,
+        padding: 15,
+        borderRadius: 14,
         shadowColor: "#0000",
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.2,
         shadowRadius: 4,
-        elevation: 4,
+        elevation: 5,
     },
-    distanceText: {
+    cacheTitle: {
+        fontSize: 20,
+        fontWeight: "bold",
+        marginBottom:5,
+    },
+    detailsText: {
         fontSize: 16,
         fontWeight: "600",
-    }
+        marginBottom: 5,
+    },
+    buttonContainer: {
+        marginTop: 5,
+        alignItems: "center",
+    },
 });
 
 export default CacheNavigationScreen;
