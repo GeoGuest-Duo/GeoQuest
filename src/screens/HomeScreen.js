@@ -1,20 +1,31 @@
 import { useEffect, useState } from "react";
 import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
-import { Button } from "../UI/Button";
+//import { Button } from "../UI/Button";
 import useStore from "../store/useStore";
 import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
 
 const HomeScreen = ({ navigation }) => {
+  // Initialisations ---------------------
+  const cachesEndpoint = "https://mark0s.com/geoquest/v1/api/caches?key=16gv8f";  // GeoQuest API endpoint for caches
+  
+  // State -------------------------------
   // Get the logged-in user from storage
-  const [user] = useStore("loggedinUser", null);
-
+  const [user] = useStore("loggedinUser", null); 
+  
   // Store the user's current location
-  const [location, setLocation] = useState(null);
+  const [location, setLocation] = useState(null);   
+
+  // Store all caches loaded from the GeoQuest API
+  const [caches, setCaches] = useState([]);   
+
+  // Store cache loading state
+  const [isLoadingCaches, setIsLoadingCaches] = useState(true); 
 
   // Store any error message
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");   
 
+  // Effect ------------------------------
   // Request location permission and get current GPS location
   useEffect(() => {
     const getLocation = async () => {
@@ -32,54 +43,82 @@ const HomeScreen = ({ navigation }) => {
     getLocation();
   }, []);
 
+  // Load caches from the GeoQuest API
+  useEffect(() => {
+    const loadCaches = async () => {
+      try {
+        const response = await fetch(cachesEndpoint);
+        const data = await response.json();
+        setCaches(Array.isArray(data) ? data : []);
+      } catch (error) {
+        console.log("Error loading caches:", error);
+        setErrorMessage("Unable to load caches.");
+      } finally {
+        setIsLoadingCaches(false);
+      }
+    };
+
+    loadCaches();
+  }, []);
+
+  // Loading / error states --------------
+    if (errorMessage) {
+      return (
+        <View style={styles.centerContainer}>
+          <Text>{errorMessage}</Text>
+        </View>
+      );
+    }
+  
+    if (!location || isLoadingCaches) {
+      return (
+        <View style={styles.centerContainer}>
+          <ActivityIndicator size="large" />
+          <Text style={styles.loadingText}>Loading map...</Text>
+        </View>
+      );
+    }
+  
+  // View --------------------------------
   return (
     <View style={styles.container}>
       {/* Welcome title */}
-      <Text style={styles.title}>Welcome to GeoQuest</Text>
+      <Text style={styles.title}> Hi {user?.UserFirstname}, ready for an adventure?</Text>
 
-      {/* Personal greeting */}
-      <Text style={styles.subtitle}>
-        Hi {user?.UserFirstname}, here is your current location.
-      </Text>
+      {/* Full interactive map centered on the user's current location */}
+      <MapView
+        style={styles.map}
+        region={{
+          latitude: location.latitude,
+          longitude: location.longitude,
+          latitudeDelta: 0.02,
+          longitudeDelta: 0.02,
+        }}
+        showsUserLocation={true}>
+        
+        {/* Marker showing the user's current location */}
+        <Marker
+          coordinate={{
+            latitude: location.latitude,
+            longitude: location.longitude,
+          }}
+          title="You are here"
+          description="Your current GPS position"
+        />
 
-      {/* Small map preview */}
-      <View style={styles.mapContainer}>
-        {errorMessage ? (
-          <Text>{errorMessage}</Text>
-        ) : !location ? (
-          <ActivityIndicator size="large" />
-        ) : (
-          <MapView
-            style={styles.map}
-            region={{
-              latitude: location.latitude,
-              longitude: location.longitude,
-              latitudeDelta: 0.01,
-              longitudeDelta: 0.01,
+        {/* Markers for all caches loaded from the API */}
+        {caches.map((cache) => (
+          <Marker
+            key={cache.CacheID}
+            coordinate={{
+              latitude: cache.CacheLatitude,
+              longitude: cache.CacheLongitude,
             }}
-            showsUserLocation={true}>
-            <Marker
-              coordinate={{
-                latitude: location.latitude,
-                longitude: location.longitude,
-              }}
-              title="You are here"
-            />
-          </MapView>
-        )}
-      </View>
-
-      {/* Navigation buttons */}
-      <View style={styles.buttons}>
-        <Button
-          label="Open Full Map"
-          onClick={() => navigation.navigate("MapScreen")}
-        />
-        <Button
-          label="View Profile"
-          onClick={() => navigation.navigate("ProfileTab")}
-        />
-      </View>
+            title={cache.CacheName}
+            description={cache.CacheDescription}
+          />
+        ))}
+      </MapView>
     </View>
   );
 };
@@ -87,38 +126,26 @@ const HomeScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+    padding: 10,
     backgroundColor: "#fff",
   },
   title: {
     fontSize: 26,
     fontWeight: "bold",
-    marginTop: 20,
+    marginTop: 5,
     marginBottom: 8,
     textAlign: "center",
   },
-  subtitle: {
-    fontSize: 16,
-    color: "gray",
-    textAlign: "center",
-    marginBottom: 20,
+  map: {
+    flex: 1,
   },
-  mapContainer: {
-    height: 250,
-    borderWidth: 1,
-    borderColor: "#ddd",
-    borderRadius: 12,
-    overflow: "hidden",
-    marginBottom: 20,
+  centerContainer: {
+    flex: 1,
     justifyContent: "center",
     alignItems: "center",
   },
-  map: {
-    width: "100%",
-    height: "100%",
-  },
-  buttons: {
-    gap: 10,
+  loadingText: {
+    marginTop: 10,
   },
 });
 
