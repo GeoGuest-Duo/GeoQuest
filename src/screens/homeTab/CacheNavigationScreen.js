@@ -1,36 +1,10 @@
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useLocation } from '../../context/LocationContext';
+import { calculateDistanceInKm } from '../../utils/CalculateDistanceInKm';
 import MapView, { Marker, Polyline } from "react-native-maps";
 import { Button } from '../../UI/Button';
 import { Linking } from 'react-native';
-
-
-const calculateDistanceInKm = (startLat, startLong, endLat, endLong) => {
-    // GPS coordinates are in degrees - Js math functions need radians
-    const toRadians = (value) => (value * Math.PI) / 180;
-
-    // Stores earth's radius in KMs
-    const earthRadius = 6371;
-
-    // Calculates difference between to points 
-    const diffInLat = toRadians(endLat - startLat);
-    const diffInLong = toRadians(endLong - startLong);
-
-    // Using the Haversine formula - Calculates how curved distance works on earth 
-    const a =
-    Math.sin(diffInLat / 2) * Math.sin(diffInLat / 2) +
-    Math.cos(toRadians(startLat)) *
-    Math.cos(toRadians(endLat)) *
-    Math.sin(diffInLong / 2) *
-    Math.sin(diffInLong / 2);
-    
-    // Converts the value into an angle that represents distance on a sphere
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-
-    // earthRadius x calculated angle
-    return earthRadius * c;
-};
 
 const CacheNavigationScreen = ({navigation, route}) => {
     // Initialisations ---------------------

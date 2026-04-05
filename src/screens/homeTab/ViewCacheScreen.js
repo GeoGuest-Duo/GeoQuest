@@ -1,4 +1,4 @@
-import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
 import { Button, ButtonTray } from '../../UI/Button';
 import Icons from '../../UI/Icons';
 
