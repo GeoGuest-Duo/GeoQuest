@@ -1,6 +1,7 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { AuthProvider, useAuth } from "./src/context/AuthContext";
+import LocationProvider from "./src/context/LocationContext";
 import TabNavigator from "./src/navigation/TabNavigator";
 import AuthStack from "./src/navigation/AuthStack";
 
@@ -39,7 +40,9 @@ const RootNavigator = () => {
 export const App = () => {
   return (
     <AuthProvider>
-      <RootNavigator/>
+      <LocationProvider>
+        <RootNavigator />
+      </LocationProvider>
     </AuthProvider>
   )
 }
