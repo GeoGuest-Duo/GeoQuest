@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 //import { Button } from "../UI/Button";
-import useStore from "../store/useStore";
+import useStore from "../../store/useStore";
 import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
 
