@@ -1,6 +1,6 @@
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 import { useEffect, useRef, useState } from "react";
-import * as Location from "expo-location";      // Gets the user's GPS location
+import { useLocation } from '../../context/LocationContext';
 import MapView, { Marker, Polyline } from "react-native-maps";
 import { Button } from '../../UI/Button';
 import { Linking } from 'react-native';
@@ -37,31 +37,10 @@ const CacheNavigationScreen = ({navigation, route}) => {
     const { cache } = route.params;
 
     // State -------------------------------
-    const [location, setLocation] = useState(null);     // Store the user's current location
-    const [isLoadingLocations, setIsLoadingLocations] = useState(true);
-    const [errorMessage, setErrorMessage] = useState("");   // Store any error message
+    const { location, isLoadingLocation, errorMessage } = useLocation();    
     const mapRef = useRef(null);    // Creates a reference to the map
 
     // Effect ------------------------------
-    // Request location permission and get current GPS location
-    useEffect(() => {
-        const getLocation = async () => {
-            const { status } = await Location.requestForegroundPermissionsAsync();
-    
-            if (status !== "granted") {
-                setErrorMessage("Location permission denied.");
-                return;
-            }
-    
-            const loc = await Location.getCurrentPositionAsync({});
-            setLocation(loc.coords);
-            setIsLoadingLocations(false);
-         };
-    
-        getLocation();
-    }, []);
-    
-
     // To pinpoint both user location and cache location on the map
     useEffect(() => {
         // if location, cache or map is not loaded or ready yet, STOP
@@ -97,6 +76,8 @@ const CacheNavigationScreen = ({navigation, route}) => {
         )
         : 0;
     
+    
+    // To open an external navigation, e.g, Google Maps
     const openExternalNavigation = () => {
         const lat = Number(cache.CacheLatitude);
         const long = Number(cache.CacheLongitude);
@@ -114,7 +95,7 @@ const CacheNavigationScreen = ({navigation, route}) => {
         );
     }
       
-    if (!location || isLoadingLocations) {
+    if (!location || isLoadingLocation) {
         return (
             <View style={styles.centerContainer}>
               <ActivityIndicator size="large" />
@@ -149,8 +130,8 @@ const CacheNavigationScreen = ({navigation, route}) => {
                             longitude: location.longitude,
                         },
                         {
-                            latitude: cache.CacheLatitude,
-                            longitude: cache.CacheLongitude,
+                            latitude: Number(cache.CacheLatitude),
+                            longitude: Number(cache.CacheLongitude),
                         },
                     ]}
                     strokeWidth={4}
