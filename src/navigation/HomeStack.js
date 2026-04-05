@@ -1,5 +1,6 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import HomeScreen from '../screens/HomeScreen';
+import HomeScreen from '../screens/homeTab/HomeScreen';
+import ViewCacheScreen from '../screens/homeTab/ViewCacheScreen';
 
 const HomeStack = () => {
     // Initialisations ---------------------
@@ -15,6 +16,12 @@ const HomeStack = () => {
                 name="HomeScreen"
                 component={HomeScreen}
                 options={{ title: "Home" }}
+            />
+
+            <Stack.Screen
+                name="ViewCacheScreen"
+                component={ViewCacheScreen}
+                options={{ title: "View cache details " }}
             />
         </Stack.Navigator>
     );
