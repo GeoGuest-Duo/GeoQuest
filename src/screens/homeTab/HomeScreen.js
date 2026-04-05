@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
-//import { Button } from "../UI/Button";
+import { ActivityIndicator, Pressable, StyleSheet, Text, View } from "react-native";
 import useStore from "../../store/useStore";
 import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
+import ViewCacheScreen from "./ViewCacheScreen";
 
 const HomeScreen = ({ navigation }) => {
   // Initialisations ---------------------
@@ -18,6 +18,9 @@ const HomeScreen = ({ navigation }) => {
 
   // Store all caches loaded from the GeoQuest API
   const [caches, setCaches] = useState([]);   
+
+  // To store the selectedCach details 
+  const [selectedCache, setSelectedCache] = useState(null);
 
   // Store cache loading state
   const [isLoadingCaches, setIsLoadingCaches] = useState(true); 
@@ -60,6 +63,15 @@ const HomeScreen = ({ navigation }) => {
 
     loadCaches();
   }, []);
+
+  // Handlers ----------------------------
+  const handleSelectCache = (cache) => {
+    if (selectedCache?.CacheID === cache.CacheID) {
+      navigation.navigate("ViewCacheScreen", { cache });
+    } else {
+      setSelectedCache(cache);
+    }
+  };
 
   // Loading / error states --------------
     if (errorMessage) {
