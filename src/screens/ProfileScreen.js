@@ -1,16 +1,14 @@
 import { StyleSheet, Text, View, Image } from "react-native";
 import { Button } from "../UI/Button";
-import useStore from "../store/useStore";
+import { AuthContext } from "../context/AuthContext";
+import { useContext } from "react";
 
 const ProfileScreen = ({ navigation }) => {
   // Initialisations ---------------------
-  // Key used to retrieve logged-in user from AsyncStorage
-  const loggedinUserKey = "loggedinUser";
 
   // State -------------------------------
   // user = current logged-in user
-  // saveLoggedinUser = function to update/remove user
-  const [user, saveLoggedinUser] = useStore(loggedinUserKey, null);
+  const { user, setUser } = useContext(AuthContext);
 
   // View --------------------------------
   return (
@@ -73,7 +71,7 @@ const ProfileScreen = ({ navigation }) => {
         />
 
         {/* Logout button - clears stored user and returns to login */}
-        <Button label="Logout" onClick={() => saveLoggedinUser(null)} />
+        <Button label="Logout" onClick={() => setUser(null)} />
       </View>
     </View>
   );
