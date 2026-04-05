@@ -1,8 +1,8 @@
 import { Alert, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import { Button } from "../UI/Button";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import useLoad from "../API/useLoad";
-import { AuthContext } from "../context/AuthContext";
+import { useAuth } from "../context/AuthContext";
 
 const LoginScreen = ({ navigation }) => {
     // Initialisations ---------------------
@@ -12,7 +12,7 @@ const LoginScreen = ({ navigation }) => {
     const [users, setUsers, isUsersLoading, loadUsers] = useLoad(usersEndpoint)
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const { setUser } = useContext(AuthContext);
+    const { login } = useAuth();       
 
     // Handlers ----------------------------
     const handleLogin = async () => {
@@ -37,7 +37,7 @@ const LoginScreen = ({ navigation }) => {
 
         if (matchedUser) {
             console.log("Login success");
-            setUser(matchedUser);
+            login(matchedUser)
         } else {
         Alert.alert("Login Failed", "Invalid username or password");
         }

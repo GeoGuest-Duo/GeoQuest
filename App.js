@@ -1,16 +1,15 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { AuthProvider, AuthContext } from "./src/context/AuthContext";
+import { AuthProvider, useAuth } from "./src/context/AuthContext";
 import TabNavigator from "./src/navigation/TabNavigator";
 import AuthStack from "./src/navigation/AuthStack";
-import { useContext } from "react";
 
 const Stack = createNativeStackNavigator();
 
 const RootNavigator = () => {
   // Initialisations ---------------------
   // State -------------------------------
-  const { user } = useContext(AuthContext);
+  const { user } = useAuth();
 
   // View --------------------------------
   return (
