@@ -3,7 +3,7 @@ import HomeStack from "./HomeStack";
 import EventScreen from "../screens/EventScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import LeaderboardScreen from "../screens/LeaderboardScreen";
-import Icons from "../UI/Icons";
+import Icons from "../UI/icons";
 
 const TabNavigator = () => {
   // Initialisations ---------------------
@@ -17,7 +17,7 @@ const TabNavigator = () => {
         component={HomeStack}
         options={{
           title: "Home",
-          tabBarIcon: () => <Icons.Home/>,
+          tabBarIcon: () => <Icons.Home />,
         }}
       />
 
@@ -26,7 +26,7 @@ const TabNavigator = () => {
         component={EventScreen}
         options={{
           title: "Events",
-          tabBarIcon: () => <Icons.Events/>,
+          tabBarIcon: () => <Icons.Events />,
         }}
       />
 
@@ -35,7 +35,7 @@ const TabNavigator = () => {
         component={LeaderboardScreen}
         options={{
           title: "Leaderboard",
-          tabBarIcon: () => <Icons.Leaderboard/>,
+          tabBarIcon: () => <Icons.Leaderboard />,
         }}
       />
 
@@ -45,7 +45,7 @@ const TabNavigator = () => {
         component={ProfileScreen}
         options={{
           title: "Profile",
-          tabBarIcon: () => <Icons.Profile/>,
+          tabBarIcon: () => <Icons.Profile />,
         }}
       />
     </Tab.Navigator>
