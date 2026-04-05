@@ -1,14 +1,13 @@
 import { StyleSheet, Text, View, Image } from "react-native";
 import { Button } from "../UI/Button";
-import { AuthContext } from "../context/AuthContext";
-import { useContext } from "react";
+import { useAuth } from "../context/AuthContext";
 
 const ProfileScreen = ({ navigation }) => {
   // Initialisations ---------------------
 
   // State -------------------------------
   // user = current logged-in user
-  const { user, setUser } = useContext(AuthContext);
+  const { user, logout } = useAuth();
 
   // View --------------------------------
   return (
@@ -71,7 +70,7 @@ const ProfileScreen = ({ navigation }) => {
         />
 
         {/* Logout button - clears stored user and returns to login */}
-        <Button label="Logout" onClick={() => setUser(null)} />
+        <Button label="Logout" onClick={() => logout()} />
       </View>
     </View>
   );
