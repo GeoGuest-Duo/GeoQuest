@@ -57,18 +57,6 @@ const ProfileScreen = ({ navigation }) => {
           onClick={() => navigation.navigate("EventTab")}
         />
 
-        {/* Navigate to Map screen (only works if MapScreen exists in navigator) */}
-        <Button
-          label="Open Map"
-          onClick={() => navigation.navigate("MapScreen")}
-        />
-
-        {/* Navigate to Progress screen (only works if registered) */}
-        <Button
-          label="My Progress"
-          onClick={() => navigation.navigate("ProgressScreen")}
-        />
-
         {/* Logout button - clears stored user and returns to login */}
         <Button label="Logout" onClick={() => logout()} />
       </View>
