@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { ActivityIndicator, Pressable, StyleSheet, Text, View } from "react-native";
 import useStore from "../../store/useStore";
 import MapView, { Marker } from "react-native-maps";
-import * as Location from "expo-location";
 import Icons from "../../UI/Icons";
+import { useLocation } from "../../context/LocationContext";
 
 const HomeScreen = ({ navigation }) => {
   // Initialisations ---------------------
@@ -12,40 +12,17 @@ const HomeScreen = ({ navigation }) => {
   // State -------------------------------
   // Get the logged-in user from storage
   const [user] = useStore("loggedinUser", null); 
-  
-  // Store the user's current location
-  const [location, setLocation] = useState(null);   
 
-  // Store all caches loaded from the GeoQuest API
-  const [caches, setCaches] = useState([]);   
+  // Caches states 
+  const [caches, setCaches] = useState([]);   // Store all caches loaded from the GeoQuest API
+  const [selectedCache, setSelectedCache] = useState(null);   // To store the selectedCach details 
+  const [isLoadingCaches, setIsLoadingCaches] = useState(true);  // Store cache loading state
+  const [cacheErrorMessage, setCacheErrorMessage] = useState(""); 
 
-  // To store the selectedCach details 
-  const [selectedCache, setSelectedCache] = useState(null);
-
-  // Store cache loading state
-  const [isLoadingCaches, setIsLoadingCaches] = useState(true); 
-
-  // Store any error message
-  const [errorMessage, setErrorMessage] = useState("");   
+  // Location
+  const { location, isLoadingLocation, errorMessage } = useLocation()
 
   // Effect ------------------------------
-  // Request location permission and get current GPS location
-  useEffect(() => {
-    const getLocation = async () => {
-      const { status } = await Location.requestForegroundPermissionsAsync();
-
-      if (status !== "granted") {
-        setErrorMessage("Location permission denied.");
-        return;
-      }
-
-      const loc = await Location.getCurrentPositionAsync({});
-      setLocation(loc.coords);
-    };
-
-    getLocation();
-  }, []);
-
   // Load caches from the GeoQuest API
   useEffect(() => {
     const loadCaches = async () => {
@@ -55,7 +32,7 @@ const HomeScreen = ({ navigation }) => {
         setCaches(Array.isArray(data) ? data : []);
       } catch (error) {
         console.log("Error loading caches:", error);
-        setErrorMessage("Unable to load caches.");
+        setCacheErrorMessage("Unable to load caches.");
       } finally {
         setIsLoadingCaches(false);
       }
@@ -76,15 +53,15 @@ const HomeScreen = ({ navigation }) => {
   };
 
   // Loading / error states --------------
-    if (errorMessage) {
+    if (errorMessage || cacheErrorMessage) {
       return (
         <View style={styles.centerContainer}>
-          <Text>{errorMessage}</Text>
+          <Text>{errorMessage || cacheErrorMessage}</Text>
         </View>
       );
     }
   
-    if (!location || isLoadingCaches) {
+    if (!location || isLoadingLocation || isLoadingCaches) {
       return (
         <View style={styles.centerContainer}>
           <ActivityIndicator size="large" />
@@ -125,8 +102,8 @@ const HomeScreen = ({ navigation }) => {
           <Marker
             key={cache.CacheID}
             coordinate={{
-              latitude: cache.CacheLatitude,
-              longitude: cache.CacheLongitude,
+              latitude: Number(cache.CacheLatitude),
+              longitude: Number(cache.CacheLongitude),
             }}
             onPress={() => handleSelectCache(cache)}
           />
