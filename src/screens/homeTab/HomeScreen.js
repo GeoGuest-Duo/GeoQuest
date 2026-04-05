@@ -3,7 +3,7 @@ import { ActivityIndicator, Pressable, StyleSheet, Text, View } from "react-nati
 import useStore from "../../store/useStore";
 import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
-import ViewCacheScreen from "./ViewCacheScreen";
+import Icons from "../../UI/Icons";
 
 const HomeScreen = ({ navigation }) => {
   // Initialisations ---------------------
@@ -65,12 +65,14 @@ const HomeScreen = ({ navigation }) => {
   }, []);
 
   // Handlers ----------------------------
+  // if user taps on the selectedCache marker again, it navigates them to ViewCacheScreen
+  // else the details on the selectedCache is shown on a tile
   const handleSelectCache = (cache) => {
-    if (selectedCache?.CacheID === cache.CacheID) {
-      navigation.navigate("ViewCacheScreen", { cache });
-    } else {
-      setSelectedCache(cache);
+    if (selectedCache && selectedCache?.CacheID === cache.CacheID) {
+      navigation.navigate("ViewCacheScreen", { cache: selectedCache });
+      return;
     }
+    setSelectedCache(cache);
   };
 
   // Loading / error states --------------
@@ -126,11 +128,28 @@ const HomeScreen = ({ navigation }) => {
               latitude: cache.CacheLatitude,
               longitude: cache.CacheLongitude,
             }}
-            title={cache.CacheName}
-            description={cache.CacheDescription}
+            onPress={() => handleSelectCache(cache)}
           />
         ))}
       </MapView>
+
+      {
+        selectedCache && (
+          <Pressable
+            style={styles.cacheTile}
+            onPress={() => navigation.navigate("ViewCacheScreen", { cache: selectedCache })}
+          >
+            <View style={styles.tileContent}>
+              <View style={{flex: 1}}>
+                <Text style={styles.cacheTitle}>{selectedCache.CacheName}</Text>
+                <Text style={styles.cacheDescription} numberOfLines={2}> {selectedCache.CacheDescription}</Text>
+              </View>
+
+              <Icons.KeyboardArrowRight/>
+            </View>
+          </Pressable>
+        )
+      }
     </View>
   );
 };
@@ -159,6 +178,33 @@ const styles = StyleSheet.create({
   loadingText: {
     marginTop: 10,
   },
+  cacheTile: {
+    position: "absolute",
+    bottom: 25,
+    left: 15,
+    right: 15,
+    backgroundColor: "#fff",
+    padding: 15,
+    borderRadius: 12,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.4,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  cacheTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 4,
+  },
+  cacheDescription: {
+    fontSize: 14,
+    color: "black",
+  },
+  tileContent: {
+    flexDirection: "row",
+    alignItems: "center",
+  }
 });
 
 export default HomeScreen;

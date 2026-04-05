@@ -6,7 +6,7 @@ const ViewCacheScreen = () => {
     // Handlers ----------------------------
     // View --------------------------------
     return (
-        <View>Cache details</View>
+        <Text>Cache details</Text>
     );
 };
 
