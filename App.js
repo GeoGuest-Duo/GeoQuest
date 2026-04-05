@@ -1,23 +1,22 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import useStore from "./src/store/useStore";
+import { AuthProvider, AuthContext } from "./src/context/AuthContext";
 import TabNavigator from "./src/navigation/TabNavigator";
 import AuthStack from "./src/navigation/AuthStack";
+import { useContext } from "react";
 
 const Stack = createNativeStackNavigator();
 
-export const App = () => {
+const RootNavigator = () => {
   // Initialisations ---------------------
-  const loggedinUserKey = "loggedinUser";
-
   // State -------------------------------
-  const [loggedinUser, saveLoggedinUser] = useStore(loggedinUserKey, null) // key = loggedinUser, value = null
+  const { user } = useContext(AuthContext);
 
   // View --------------------------------
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{headerShown: false}}>
-        {loggedinUser === null ? (
+        {user === null ? (
           // <>...</> groups multiple <Stack.Screen> components together
           <>
             <Stack.Screen
@@ -37,5 +36,13 @@ export const App = () => {
     </NavigationContainer>
   );
 };
+
+export const App = () => {
+  return (
+    <AuthProvider>
+      <RootNavigator/>
+    </AuthProvider>
+  )
+}
 
 export default App;
