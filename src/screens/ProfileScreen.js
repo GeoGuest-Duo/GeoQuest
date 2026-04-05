@@ -56,6 +56,21 @@ const ProfileScreen = ({ navigation }) => {
           label="View Events"
           onClick={() => navigation.navigate("EventTab")}
         />
+        {/* Buttons for editing username and password */}
+        <View style={styles.editButtons}>
+          <Button
+            label="Change Username"
+            onClick={() =>
+              navigation.navigate("EditProfileScreen", { mode: "username" })
+            }
+          />
+          <Button
+            label="Change Password"
+            onClick={() =>
+              navigation.navigate("EditProfileScreen", { mode: "password" })
+            }
+          />
+        </View>
 
         {/* Logout button - clears stored user and returns to login */}
         <Button label="Logout" onClick={() => logout()} />

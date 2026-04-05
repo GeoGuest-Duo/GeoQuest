@@ -5,20 +5,19 @@ import CacheNavigationScreen from '../screens/homeTab/CacheNavigationScreen';
 import LogCacheScreen from '../screens/homeTab/LogCacheScreen';
 
 const HomeStack = () => {
-    // Initialisations ---------------------
-    const Stack = createNativeStackNavigator();
+  // Initialisations ---------------------
+  const Stack = createNativeStackNavigator();
 
-    // View --------------------------------
-    return (
-        <Stack.Navigator
-            initialRouteName='HomeScreen'
-            screenOptions={{headerShown: false}}
-        >
-            <Stack.Screen
-                name="HomeScreen"
-                component={HomeScreen}
-                options={{ title: "Home" }}
-            />
+  // View --------------------------------
+  return (
+    <Stack.Navigator
+      initialRouteName="HomeScreen"
+      screenOptions={{ headerShown: false }}>
+      <Stack.Screen
+        name="HomeScreen"
+        component={HomeScreen}
+        options={{ title: "Home" }}
+      />
 
             <Stack.Screen
                 name="ViewCacheScreen"
