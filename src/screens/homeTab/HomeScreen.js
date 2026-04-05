@@ -145,7 +145,7 @@ const HomeScreen = ({ navigation }) => {
                 <Text style={styles.cacheDescription} numberOfLines={2}> {selectedCache.CacheDescription}</Text>
               </View>
 
-              <Icons.KeyboardArrowRight/>
+              <Icons.ChevronRight/>
             </View>
           </Pressable>
         )

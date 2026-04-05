@@ -3,7 +3,7 @@ import HomeStack from "./HomeStack";
 import EventScreen from "../screens/EventScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import LeaderboardScreen from "../screens/LeaderboardScreen";
-import Icons from "../UI/icons";
+import Icons from "../UI/Icons";
 
 const TabNavigator = () => {
   // Initialisations ---------------------

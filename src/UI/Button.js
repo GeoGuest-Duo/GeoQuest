@@ -12,8 +12,8 @@ export const Button = ({label, icon, onClick, styleButton, styleLabel}) => {
             style={[styles.button, styleButton]}
             pressedStyle={styles.pressedButton}
         >
-            {icon ? icon : null}
             <Text style={[styles.label, styleLabel]}>{label}</Text>
+            {icon ? icon : null}
         </Selector>
     );
 };
@@ -29,10 +29,13 @@ export const ButtonTray = ({children}) => {
 const styles = StyleSheet.create({
     buttonTray: {
         flexDirection: 'row',
-        gap: 15,
+        justifyContent: 'center',
+        gap: 20,
+        marginVertical: 5,
     },
     button: {
         minHeight: 50,
+        width: 150,
         borderWidth: 1,
         borderRadius: 7,
         borderColor: 'grey',
@@ -42,7 +45,7 @@ const styles = StyleSheet.create({
         paddingVertical: 12,
         paddingHorizontal: 20,
         flexDirection: 'row',
-        gap: 5,
+        gap: 8,
     },
     label: {
         fontSize: 16,
