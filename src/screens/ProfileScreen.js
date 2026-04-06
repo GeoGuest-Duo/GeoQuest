@@ -1,142 +1,202 @@
-import { StyleSheet, Text, View, Image } from "react-native";
+import React from "react";
+import { StyleSheet, Text, View, Image, ScrollView } from "react-native";
 import { Button } from "../UI/Button";
 import { useAuth } from "../context/AuthContext";
 
 const ProfileScreen = ({ navigation }) => {
-  // Initialisations ---------------------
-
-  // State -------------------------------
-  // user = current logged-in user
   const { user, logout } = useAuth();
 
-  // View --------------------------------
   return (
-    <View style={styles.container}>
-      {/* Screen title */}
-      <Text style={styles.title}>My Profile</Text>
+    <ScrollView
+      contentContainerStyle={styles.scrollContent}
+      showsVerticalScrollIndicator={false}>
+      <View style={styles.container}>
+        <Text style={styles.title}>My Profile</Text>
 
-      {/* Profile card displaying image and basic user info */}
-      <View style={styles.card}>
-        {/* Display user profile image if available */}
-        {user?.UserImageURL ? (
-          <Image source={{ uri: user.UserImageURL }} style={styles.avatar} />
-        ) : null}
+        <View style={styles.card}>
+          {user?.UserImageURL ? (
+            <Image source={{ uri: user.UserImageURL }} style={styles.avatar} />
+          ) : (
+            <View style={styles.avatarPlaceholder}>
+              <Text style={styles.avatarPlaceholderText}>
+                {user?.UserFirstname?.[0]}
+                {user?.UserLastname?.[0]}
+              </Text>
+            </View>
+          )}
 
-        {/* Display user's full name */}
-        <Text style={styles.name}>
-          {user?.UserFirstname} {user?.UserLastname}
-        </Text>
+          <Text style={styles.name}>
+            {user?.UserFirstname} {user?.UserLastname}
+          </Text>
 
-        {/* Display username */}
-        <Text style={styles.username}>@{user?.UserUsername}</Text>
+          <Text style={styles.username}>@{user?.UserUsername}</Text>
+        </View>
+
+        <View style={styles.statsRow}>
+          <View style={styles.statBox}>
+            <Text style={styles.statNumber}>0</Text>
+            <Text style={styles.statLabel}>Points</Text>
+          </View>
+
+          <View style={styles.statBox}>
+            <Text style={styles.statNumber}>0</Text>
+            <Text style={styles.statLabel}>Finds</Text>
+          </View>
+
+          <View style={styles.statBox}>
+            <Text style={styles.statNumber}>0</Text>
+            <Text style={styles.statLabel}>Events</Text>
+          </View>
+        </View>
+
+        <View style={styles.actions}>
+          <View style={styles.actionButton}>
+            <Button
+              label="View Events"
+              onClick={() => navigation.navigate("EventTab")}
+            />
+          </View>
+
+          <View style={styles.actionButton}>
+            <Button
+              label="Change Username"
+              onClick={() =>
+                navigation.navigate("EditProfileScreen", { mode: "username" })
+              }
+            />
+          </View>
+
+          <View style={styles.actionButton}>
+            <Button
+              label="Change Password"
+              onClick={() =>
+                navigation.navigate("EditProfileScreen", { mode: "password" })
+              }
+            />
+          </View>
+
+          <View style={styles.actionButton}>
+            <Button label="Logout" onClick={logout} />
+          </View>
+        </View>
       </View>
-
-      {/* User statistics such as points, finds, and events */}
-      <View style={styles.statsRow}>
-        <View style={styles.statBox}>
-          <Text style={styles.statNumber}>0</Text>
-          <Text>Points</Text>
-        </View>
-
-        <View style={styles.statBox}>
-          <Text style={styles.statNumber}>0</Text>
-          <Text>Finds</Text>
-        </View>
-
-        <View style={styles.statBox}>
-          <Text style={styles.statNumber}>0</Text>
-          <Text>Events</Text>
-        </View>
-      </View>
-
-      {/* Navigation buttons allowing the user to access core app features */}
-      <View style={styles.buttons}>
-        {/* Navigate to Events tab */}
-        <Button
-          label="View Events"
-          onClick={() => navigation.navigate("EventTab")}
-        />
-        {/* Buttons for editing username and password */}
-        <View style={styles.editButtons}>
-          <Button
-            label="Change Username"
-            onClick={() =>
-              navigation.navigate("EditProfileScreen", { mode: "username" })
-            }
-          />
-          <Button
-            label="Change Password"
-            onClick={() =>
-              navigation.navigate("EditProfileScreen", { mode: "password" })
-            }
-          />
-        </View>
-
-        {/* Logout button - clears stored user and returns to login */}
-        <Button label="Logout" onClick={() => logout()} />
-      </View>
-    </View>
+    </ScrollView>
   );
 };
-
-// Styles -------------------------------
+// Sytling the page
 const styles = StyleSheet.create({
+  scrollContent: {
+    flexGrow: 1,
+    backgroundColor: "#fff",
+    paddingTop: 24,
+    paddingBottom: 40,
+  },
+
   container: {
     flex: 1,
-    padding: 20,
-    alignItems: "center",
-    backgroundColor: "#fff",
+    paddingHorizontal: 16,
   },
+
   title: {
-    fontSize: 26,
-    fontWeight: "bold",
-    marginTop: 20,
+    fontSize: 28,
+    fontWeight: "700",
+    textAlign: "center",
     marginBottom: 20,
+    color: "#111",
   },
+
   card: {
     width: "100%",
     alignItems: "center",
-    padding: 20,
+    paddingVertical: 20,
+    paddingHorizontal: 16,
     borderWidth: 1,
-    borderColor: "#ddd",
-    borderRadius: 12,
-    marginBottom: 20,
+    borderColor: "#E3E3E3",
+    borderRadius: 16,
+    marginBottom: 18,
+    backgroundColor: "#FAFAFA",
   },
+
   avatar: {
     width: 90,
     height: 90,
     borderRadius: 45,
-    marginBottom: 10,
+    marginBottom: 12,
   },
-  name: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  username: {
-    color: "gray",
-    marginTop: 4,
-  },
-  statsRow: {
-    flexDirection: "row",
-    gap: 10,
-    marginBottom: 20,
-  },
-  statBox: {
+
+  avatarPlaceholder: {
+    width: 90,
+    height: 90,
+    borderRadius: 45,
+    backgroundColor: "#D9D9D9",
     alignItems: "center",
     justifyContent: "center",
-    padding: 15,
+    marginBottom: 12,
+  },
+
+  avatarPlaceholderText: {
+    fontSize: 26,
+    fontWeight: "700",
+    color: "#555",
+  },
+
+  name: {
+    fontSize: 22,
+    fontWeight: "700",
+    color: "#111",
+    marginBottom: 4,
+    textAlign: "center",
+  },
+
+  username: {
+    fontSize: 15,
+    color: "#777",
+    textAlign: "center",
+  },
+
+  statsRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 20,
+  },
+
+  statBox: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 16,
     borderWidth: 1,
-    borderColor: "#ddd",
-    borderRadius: 10,
-    minWidth: 90,
+    borderColor: "#E3E3E3",
+    borderRadius: 12,
+    backgroundColor: "#FAFAFA",
+    marginHorizontal: 4,
   },
+
   statNumber: {
-    fontSize: 20,
-    fontWeight: "bold",
+    fontSize: 22,
+    fontWeight: "700",
+    color: "#111",
+    marginBottom: 4,
   },
-  buttons: {
+
+  statLabel: {
+    fontSize: 14,
+    color: "#666",
+  },
+
+  actions: {
     width: "100%",
-    gap: 10,
+    marginTop: 6,
+    gap: 12,
+  },
+
+  actionButton: {
+    width: "100%",
+  },
+
+  logoutWrapper: {
+    width: "100%",
+    marginTop: 10,
   },
 });
 
