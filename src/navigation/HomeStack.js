@@ -3,6 +3,7 @@ import HomeScreen from '../screens/homeTab/HomeScreen';
 import ViewCacheScreen from '../screens/homeTab/ViewCacheScreen';
 import CacheNavigationScreen from '../screens/homeTab/CacheNavigationScreen';
 import LogCacheScreen from '../screens/homeTab/LogCacheScreen';
+import LogSuccessScreen from '../screens/homeTab/LogSuccessScreen';
 
 const HomeStack = () => {
   // Initialisations ---------------------
@@ -35,6 +36,12 @@ const HomeStack = () => {
                 name="LogCacheScreen"
                 component={LogCacheScreen}
                 options={{ title: "Log cache" }}
+            />
+          
+           <Stack.Screen
+                name="LogSuccessScreen"
+                component={LogSuccessScreen}
+                options={{ title: "Successful" }}
             />
         </Stack.Navigator>
     );
