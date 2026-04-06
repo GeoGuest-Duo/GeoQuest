@@ -4,6 +4,7 @@ import EventScreen from "../screens/EventScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import LeaderboardScreen from "../screens/LeaderboardScreen";
 import Icons from "../UI/Icons";
+import EditProfileScreen from "../screens/EditProfileScreen";
 
 const TabNavigator = () => {
   // Initialisations ---------------------
@@ -46,6 +47,19 @@ const TabNavigator = () => {
         options={{
           title: "Profile",
           tabBarIcon: () => <Icons.Profile />,
+        }}
+        // this screen will be hidden and only be reached
+        // the Profile screen when the user clicks on the
+        // change password and user.
+      />
+      <Tab.Screen
+        name="EditProfileScreen"
+        component={EditProfileScreen}
+        options={{
+          title: "Edit Profile",
+          tabBarButton: () => null,
+          tabBarItemStyle: { display: "none" },
+          headerShown: true,
         }}
       />
     </Tab.Navigator>
