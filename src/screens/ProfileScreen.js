@@ -77,14 +77,14 @@ const ProfileScreen = ({ navigation }) => {
 
           <View style={styles.actionButton}>
             <Button label="Logout" onClick={logout} />
-            <Button title="Open Events" onPress={handleOpenEvents} />
           </View>
         </View>
       </View>
     </ScrollView>
   );
 };
-// Sytling the page
+
+// Styling the page
 const styles = StyleSheet.create({
   scrollContent: {
     flexGrow: 1,
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     textAlign: "center",
     marginBottom: 20,
-    color: "#111",
+    color: "#30055f92", // purple
   },
 
   card: {
@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
     width: 90,
     height: 90,
     borderRadius: 45,
-    backgroundColor: "#D9D9D9",
+    backgroundColor: "#A29BFE",
     alignItems: "center",
     justifyContent: "center",
     marginBottom: 12,
