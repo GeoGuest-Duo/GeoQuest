@@ -77,6 +77,7 @@ const ProfileScreen = ({ navigation }) => {
 
           <View style={styles.actionButton}>
             <Button label="Logout" onClick={logout} />
+            <Button title="Open Events" onPress={handleOpenEvents} />
           </View>
         </View>
       </View>
