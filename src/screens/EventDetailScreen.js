@@ -133,44 +133,50 @@ const EventDetailScreen = ({ route }) => {
 };
 
 // ---------------- STYLES ----------------
+
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
+    backgroundColor: "#FFFFFF",
     padding: 20,
-    backgroundColor: "#fff",
   },
 
   logo: {
-    width: 200,
-    height: 120,
+    width: 250,
+    height: 250,
     alignSelf: "center",
-    marginBottom: 15,
+    marginBottom: 10,
   },
 
   card: {
-    borderWidth: 1,
-    borderColor: "#ddd",
-    borderRadius: 10,
-    padding: 20,
-    backgroundColor: "#f9f9f9",
+    backgroundColor: "#F2EDC2",
+    borderRadius: 18,
+    padding: 22,
+    shadowColor: "#000",
+    shadowOpacity: 0.08,
+    shadowRadius: 8,
+    elevation: 4,
   },
 
   title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 15,
+    fontSize: 26,
+    fontWeight: "700",
+    color: "#346739",
+    marginBottom: 14,
   },
 
   label: {
     fontSize: 16,
-    fontWeight: "bold",
-    marginTop: 10,
+    fontWeight: "700",
+    color: "#346739",
+    marginTop: 12,
     marginBottom: 4,
   },
 
   value: {
     fontSize: 15,
     color: "#333",
+    lineHeight: 22,
   },
 });
 

@@ -73,37 +73,59 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: "#fff",
+    backgroundColor: "white",
   },
+
   title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 15,
+    fontSize: 28,
+    fontWeight: "700",
+    marginBottom: 18,
+    color: "#346739",
   },
+
   list: {
     paddingBottom: 20,
   },
+
   card: {
-    borderWidth: 1,
-    borderColor: "#ddd",
-    borderRadius: 10,
-    padding: 15,
-    marginBottom: 12,
-    backgroundColor: "#f9f9f9",
+    backgroundColor: "#F2EDC2",
+    borderRadius: 18,
+    padding: 18,
+    marginBottom: 14,
+    shadowColor: "#000",
+    shadowOpacity: 0.08,
+    shadowRadius: 8,
+    elevation: 4,
   },
+
   eventName: {
-    fontSize: 18,
-    fontWeight: "bold",
-    marginBottom: 6,
-  },
-  eventDescription: {
-    fontSize: 14,
+    fontSize: 20,
+    fontWeight: "700",
     marginBottom: 8,
+    color: "#346739",
   },
+
+  eventDescription: {
+    fontSize: 15,
+    marginBottom: 10,
+    color: "#333",
+    lineHeight: 22,
+  },
+
   eventText: {
-    fontSize: 13,
+    fontSize: 14,
     color: "#555",
-    marginBottom: 4,
+    marginBottom: 5,
+  },
+
+  buttonContainer: {
+    marginTop: 12,
+  },
+
+  emptyText: {
+    fontSize: 16,
+    color: "#346739",
+    marginTop: 20,
   },
 });
 

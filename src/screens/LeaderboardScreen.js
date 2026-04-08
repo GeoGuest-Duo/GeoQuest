@@ -157,56 +157,78 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: "#fff",
+    backgroundColor: "#FFFFFF",
   },
+
   title: {
-    fontSize: 26,
-    fontWeight: "bold",
+    fontSize: 28,
+    fontWeight: "700",
     marginTop: 20,
     marginBottom: 20,
+    color: "#346739",
   },
+
   list: {
     paddingBottom: 20,
   },
+
   card: {
     flexDirection: "row",
     alignItems: "center",
-    padding: 15,
-    borderWidth: 1,
-    borderColor: "#ddd",
-    borderRadius: 10,
-    marginBottom: 10,
-    backgroundColor: "#fff",
+    padding: 16,
+    borderRadius: 18,
+    marginBottom: 12,
+    backgroundColor: "#F2EDC2",
+    shadowColor: "#000",
+    shadowOpacity: 0.08,
+    shadowRadius: 8,
+    elevation: 4,
   },
+
   currentUserCard: {
-    borderColor: "#007AFF",
-    backgroundColor: "#EAF3FF",
+    backgroundColor: "#346739",
+    borderWidth: 0,
   },
+
   pressedCard: {
-    opacity: 0.8,
+    opacity: 0.85,
   },
+
   rank: {
     fontSize: 18,
-    fontWeight: "bold",
-    width: 45,
+    fontWeight: "700",
+    width: 50,
+    color: "#346739",
   },
+
   info: {
     flex: 1,
   },
+
   name: {
     fontSize: 16,
-    fontWeight: "bold",
+    fontWeight: "700",
+    color: "#346739",
   },
+
   subtext: {
-    color: "gray",
-    marginTop: 2,
+    color: "#666",
+    marginTop: 3,
+    fontSize: 13,
   },
+
   points: {
     fontSize: 16,
-    fontWeight: "bold",
+    fontWeight: "700",
+    color: "#346739",
   },
+
   currentUserText: {
-    color: "#005BBB",
+    color: "#F2EDC2",
+  },
+
+  currentUserSubtext: {
+    color: "#E8E1B8",
   },
 });
 

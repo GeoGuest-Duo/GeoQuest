@@ -87,7 +87,7 @@ const ProfileScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   scrollContent: {
     flexGrow: 1,
-    backgroundColor: "#ffffffff",
+    backgroundColor: "white",
     paddingTop: 24,
     paddingBottom: 40,
   },
@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
     borderColor: "#41136cff",
     borderRadius: 16,
     marginBottom: 18,
-    backgroundColor: "#F2C1D1", // the Avatar
+    backgroundColor: "#F2EDC2", // the Avatar
   },
 
   avatar: {
@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#41136cff",
     borderRadius: 12,
-    backgroundColor: "#F2C1D1",
+    backgroundColor: "#F2EDC2",
     marginHorizontal: 4,
   },
 
