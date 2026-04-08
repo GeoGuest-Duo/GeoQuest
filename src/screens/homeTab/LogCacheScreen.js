@@ -105,9 +105,9 @@ const LogCacheScreen = ({navigation, route}) => {
         <View style={styles.container}>
             <View style={styles.topSection}>
                 <Text style={styles.cacheTitle}>{cache.CacheName}</Text>
-                <Text style={styles.detailsText}>{cache.CacheDescription}</Text>
-                <Text style={styles.detailsText}> Points to earn: { cache.CachePoints}</Text>
-                <Text style={styles.instructionText}>Found it? Snap a quick photo to log your discovery!</Text>
+                <Text style={styles.descriptionText}>{cache.CacheDescription}</Text>
+                <Text style={styles.pointsText}> Points to earn: { cache.CachePoints}</Text>
+                <Text style={styles.mainInstruction}>Found it? Snap a quick photo to log your discovery!</Text>
 
                 <Button
                     label="Take photo"
@@ -124,7 +124,7 @@ const LogCacheScreen = ({navigation, route}) => {
             </View>
             
             <View style={styles.bottomSection}>
-                <Text style={styles.instructionText}>Move within 100 metres to claim the cache.</Text>
+                <Text style={styles.warningText}>Move within 100 metres to claim the cache.</Text>
 
                 {/*Found/NotFound Buttons*/}
                 <ButtonTray>    
@@ -145,14 +145,13 @@ const LogCacheScreen = ({navigation, route}) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 16,
+        backgroundColor: "white",
     },
     cacheTitle: {
-        fontSize: 30,
+        fontSize: 35,
+        color: "#5D4037",
         fontWeight: "bold",
         textAlign: "center",
-        //marginTop: 10,
-        //marginBottom: 10,
         padding: 10
     },  
     photo: {
@@ -161,11 +160,25 @@ const styles = StyleSheet.create({
         marginTop: 20,
         borderRadius: 10,
     },
-    detailsText: {
+    descriptionText: {
+        fontSize: 20,
+        fontWeight: "bold",
+        textAlign: "center",
+        color: "black",
+        marginBottom: 6,
+    },
+    pointsText: {
         fontSize: 20,
         fontWeight: "600",
-        marginBottom: 12,
         textAlign: "center",
+        color: "#000000", // green
+        marginBottom: 12,
+    },
+    mainInstruction: {
+        fontSize: 18,
+        textAlign: "center",
+        color: "black",
+        marginBottom: 20,
     },
     topSection: {
         alignItems: "center",
@@ -175,11 +188,12 @@ const styles = StyleSheet.create({
         marginTop: "auto",
         marginBottom: 10,
     },
-    instructionText: {
-        fontSize: 15,
+    warningText: {
+        fontSize: 18,
+        fontWeight: "500",
         textAlign: "center",
+        color: "#D32F2F",
         marginBottom: 20,
-        lineHeight: 22,
     },
 });
 

@@ -1,4 +1,4 @@
-import { Alert, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import { Alert, Image, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import { Button } from "../UI/Button";
 import { useState } from "react";
 import useLoad from "../API/useLoad";
@@ -46,45 +46,71 @@ const LoginScreen = ({ navigation }) => {
     // View --------------------------------
     return (
         <View style={styles.container}>
-        <TextInput
-            placeholder="Username"
-            value={username}
-            onChangeText={setUsername}
-            style={styles.inputField}
-        />
+            <Image 
+                source={require("../../assets/splash.png")} 
+                style={styles.image}
+            />
+            <View style={styles.formContainer}>
+                <Text style={styles.label}>Username</Text>
+                <TextInput
+                    placeholder="Username"
+                    value={username}
+                    onChangeText={setUsername}
+                    style={styles.inputField}
+                />
 
-        <TextInput
-            placeholder="Password"
-            value={password}
-            onChangeText={setPassword}
-            secureTextEntry={true}
-            style={styles.inputField}
-        />
-
-        <Button label="Login" onClick={handleLogin} />
-        <Pressable
-            style={styles.signUpText}
-            onPress={() => navigation.navigate("SignupScreen")}>
-            <Text>Don't have an account? Sign Up</Text>
-        </Pressable>
+                <Text style={styles.label}>Password</Text>
+                <TextInput
+                    placeholder="Password"
+                    value={password}
+                    onChangeText={setPassword}
+                    secureTextEntry={true}
+                    style={styles.inputField}
+                />
+            <Button label="Login" onClick={handleLogin} />
+            <Pressable
+                style={styles.signUpText}
+                onPress={() => navigation.navigate("SignupScreen")}>
+                <Text>Don't have an account? Sign Up</Text>
+            </Pressable>
+            </View>
         </View>
-    );
-};
+        );
+    };
 
     const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
+        backgroundColor: "#fff"
+    },
+    formContainer: {
+        width: "80%",   // 👈 keeps everything same width
+    },
+    label: {
+        fontSize: 18,
+        fontWeight: "400",
+        color: "black",
+        marginBottom: 5, 
+    },
+    signUpText: {
+        paddingTop: 18,
+        alignItems: "center",
     },
     inputField: {
         borderWidth: 1,
         padding: 10,
-        marginBottom: 10,
         borderRadius: 5,
+        marginBottom: 15,  
+        width: "100%",  
     },
-    signUpText: {
-        padding: 15,
+    image: {
+        width: 400,
+        height: 300,
+        resizeMode: "contain",
+        alignSelf: "center",
+        marginBottom: 30,
     },
     });
 
