@@ -1,18 +1,24 @@
-import { ActivityIndicator, Alert, FlatList, StyleSheet, Text, View } from "react-native";
+import {
+  ActivityIndicator,
+  Alert,
+  FlatList,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { Button } from "../UI/Button";
 import useLoad from "../API/useLoad";
 
-const EventsScreen = ({ navigation }) => {
+const EventScreen = ({ navigation }) => {
   // Initialisations ---------------------
   const eventsEndpoint = "https://mark0s.com/geoquest/v1/api/events?key=16gv8f";
 
   // State -------------------------------
-  const [events, setEvents, isEventsLoading, loadEvents] = useLoad(eventsEndpoint)
+  const [events, setEvents, isEventsLoading, loadEvents] =
+    useLoad(eventsEndpoint);
 
   // Keep only public events
-  const publicEvents = events.filter(
-    (event) => event.EventIspublic === true,
-  );
+  const publicEvents = events.filter((event) => event.EventIspublic === true);
 
   // Handlers ----------------------------
   // here is showing the  Function to render each event card,
@@ -32,7 +38,7 @@ const EventsScreen = ({ navigation }) => {
 
         <Button
           label="Open Event"
-          onClick={() => console.log("Selected event:", item.EventID)}
+          onClick={() => navigation.navigate("EventDetails", { event: item })}
         />
       </View>
     );
@@ -101,4 +107,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default EventsScreen;
+export default EventScreen;

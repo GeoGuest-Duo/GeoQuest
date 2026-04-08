@@ -1,10 +1,10 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeStack from "./HomeStack";
-import EventScreen from "../screens/EventScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import LeaderboardScreen from "../screens/LeaderboardScreen";
 import Icons from "../UI/Icons";
 import EditProfileScreen from "../screens/EditProfileScreen";
+import EventStack from "./EventStack";
 
 const TabNavigator = () => {
   // Initialisations ---------------------
@@ -24,9 +24,10 @@ const TabNavigator = () => {
 
       <Tab.Screen
         name="EventTab"
-        component={EventScreen}
+        component={EventStack}
         options={{
           title: "Events",
+          headerShown: false,
           tabBarIcon: () => <Icons.Events />,
         }}
       />
