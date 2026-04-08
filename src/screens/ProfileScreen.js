@@ -1,5 +1,6 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import { useFocusEffect } from "@react-navigation/native";
+import { useCallback, useEffect, useState } from "react";
 import { StyleSheet, Text, View, Image, ScrollView } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Button } from "../UI/Button";
@@ -8,39 +9,67 @@ import { useAuth } from "../context/AuthContext";
 const ProfileScreen = ({ navigation }) => {
   // Initialisations ---------------------
   const { user, logout } = useAuth();
+  const cachesEndpoint = "https://mark0s.com/geoquest/v1/api/caches?key=16gv8f";
 
   // State -------------------------------
   const [findCount, setFindCount] = useState(0);    // To display the number of finds by the user
   const [points, setPoints] = useState(0);          // To display the number of points earned
 
+
   // Handlers ----------------------------
-  useEffect(() => {
-    const loadFindCount = async () => {
-      try {
-        // Gets all saved finds from AsyncStorage 
-        const storedFinds = await AsyncStorage.getItem("finds");
+  useFocusEffect(
+    useCallback(() => {
+      //
+      const loadUserStats = async () => {
+        try {
+          // Gets all saved finds from AsyncStorage 
+          const storedFinds = await AsyncStorage.getItem("finds");
 
-        // To convert stored string to arrays 
-        const finds = storedFinds ? JSON.parse(storedFinds) : [];
+          // To convert stored string to arrays 
+          const finds = storedFinds ? JSON.parse(storedFinds) : [];
 
-        // Filter out finds for teh current loggedinUser
-        const userFindCount = finds.filter(
-          (find) => find.userID === user?.UserID
-        );
+          // Filter out finds for the current loggedinUser
+          const userFinds = finds.filter(
+            (find) => find.userID === user?.UserID
+          );
 
-        // save number of finds into state
-        setFindCount(userFindCount.length);
+          // save number of finds into state
+          setFindCount(userFinds.length);
 
-        console.log("Current user finds:", userFindCount);
-      } catch (error) {
-        console.log("Error loading find count", error);
+          // Fetch all caches from the API
+          const response = await fetch(cachesEndpoint);
+          const caches = await response.json();
+
+          // Calculate total points for the current loggedinUse
+          // .reduce takes an array and turn it into a single value
+          // sum = running total; find = current item
+          const totalPoints = userFinds.reduce((sum, find) => {
+            const matchedCache = caches.find(
+              (cache) => Number(cache.CacheID) === Number(find.cacheID)
+            );
+
+            // If cache exits, use its points else use 0
+            return sum + (matchedCache ? Number(matchedCache.CachePoints) : 0);
+          }, 0);
+
+          // To save totalPoints
+          setPoints(totalPoints);
+
+          console.log("Current user finds:", userFinds);
+          console.log("Total points: ", totalPoints);
+        } catch (error) {
+          console.log("Error loading find count", error);
+        }
+      };
+      
+      if (user) {
+        loadUserStats();
       }
-    };
-    
-    if (user) {
-      loadFindCount();
-    }
-  }, [user]);
+      
+      return () => { };
+
+    }, [user])
+  );
 
   // View --------------------------------
   return (
