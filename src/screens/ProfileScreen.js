@@ -12,9 +12,8 @@ const ProfileScreen = ({ navigation }) => {
   const cachesEndpoint = "https://mark0s.com/geoquest/v1/api/caches?key=16gv8f";
 
   // State -------------------------------
-  const [findCount, setFindCount] = useState(0);    // To display the number of finds by the user
-  const [points, setPoints] = useState(0);          // To display the number of points earned
-
+  const [findCount, setFindCount] = useState(0); // To display the number of finds by the user
+  const [points, setPoints] = useState(0); // To display the number of points earned
 
   // Handlers ----------------------------
   useFocusEffect(
@@ -22,15 +21,15 @@ const ProfileScreen = ({ navigation }) => {
       //
       const loadUserStats = async () => {
         try {
-          // Gets all saved finds from AsyncStorage 
+          // Gets all saved finds from AsyncStorage
           const storedFinds = await AsyncStorage.getItem("finds");
 
-          // To convert stored string to arrays 
+          // To convert stored string to arrays
           const finds = storedFinds ? JSON.parse(storedFinds) : [];
 
           // Filter out finds for the current loggedinUser
           const userFinds = finds.filter(
-            (find) => find.userID === user?.UserID
+            (find) => find.userID === user?.UserID,
           );
 
           // save number of finds into state
@@ -45,7 +44,7 @@ const ProfileScreen = ({ navigation }) => {
           // sum = running total; find = current item
           const totalPoints = userFinds.reduce((sum, find) => {
             const matchedCache = caches.find(
-              (cache) => Number(cache.CacheID) === Number(find.cacheID)
+              (cache) => Number(cache.CacheID) === Number(find.cacheID),
             );
 
             // If cache exits, use its points else use 0
@@ -61,14 +60,13 @@ const ProfileScreen = ({ navigation }) => {
           console.log("Error loading find count", error);
         }
       };
-      
+
       if (user) {
         loadUserStats();
       }
-      
-      return () => { };
 
-    }, [user])
+      return () => {};
+    }, [user]),
   );
 
   // View --------------------------------
