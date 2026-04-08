@@ -1,10 +1,48 @@
 import React from "react";
+import { useEffect, useState } from "react";
 import { StyleSheet, Text, View, Image, ScrollView } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Button } from "../UI/Button";
 import { useAuth } from "../context/AuthContext";
+
 const ProfileScreen = ({ navigation }) => {
+  // Initialisations ---------------------
   const { user, logout } = useAuth();
 
+  // State -------------------------------
+  const [findCount, setFindCount] = useState(0);    // To display the number of finds by the user
+  const [points, setPoints] = useState(0);          // To display the number of points earned
+
+  // Handlers ----------------------------
+  useEffect(() => {
+    const loadFindCount = async () => {
+      try {
+        // Gets all saved finds from AsyncStorage 
+        const storedFinds = await AsyncStorage.getItem("finds");
+
+        // To convert stored string to arrays 
+        const finds = storedFinds ? JSON.parse(storedFinds) : [];
+
+        // Filter out finds for teh current loggedinUser
+        const userFindCount = finds.filter(
+          (find) => find.userID === user?.UserID
+        );
+
+        // save number of finds into state
+        setFindCount(userFindCount.length);
+
+        console.log("Current user finds:", userFindCount);
+      } catch (error) {
+        console.log("Error loading find count", error);
+      }
+    };
+    
+    if (user) {
+      loadFindCount();
+    }
+  }, [user]);
+
+  // View --------------------------------
   return (
     <ScrollView
       contentContainerStyle={styles.scrollContent}
@@ -33,12 +71,12 @@ const ProfileScreen = ({ navigation }) => {
 
         <View style={styles.statsRow}>
           <View style={styles.statBox}>
-            <Text style={styles.statNumber}>0</Text>
+            <Text style={styles.statNumber}>{points}</Text>
             <Text style={styles.statLabel}>Points</Text>
           </View>
 
           <View style={styles.statBox}>
-            <Text style={styles.statNumber}>0</Text>
+            <Text style={styles.statNumber}>{findCount}</Text>
             <Text style={styles.statLabel}>Finds</Text>
           </View>
 
