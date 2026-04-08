@@ -68,7 +68,9 @@ const LoginScreen = ({ navigation }) => {
   // ---------------- VIEW ----------------
   return (
     // This Prevents keyboard from covering inputs
-    <KeyboardAvoidingView style={styles.keyboardContainer}>
+    <KeyboardAvoidingView
+      style={styles.keyboardContainer}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}>
       <ScrollView
         contentContainerStyle={styles.container}
         keyboardShouldPersistTaps="handled"
@@ -97,7 +99,7 @@ const LoginScreen = ({ navigation }) => {
             style={styles.inputField}
           />
 
-          <Button label="Login" onPress={handleLogin} />
+          <Button label="Login" onClick={handleLogin} />
 
           <Pressable
             style={styles.signUpText}
