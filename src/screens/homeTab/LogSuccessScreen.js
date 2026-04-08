@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useAuth } from '../../context/AuthContext';
 
@@ -14,6 +14,8 @@ const LogSuccessScreen = ({navigation, route}) => {
         findID: Date.now().toString(), 
         userID: user.UserID,
         cacheID: cache.CacheID,
+        cacheName: cache.CacheName,
+        cachePoints: cache.CachePoints,
         findDateTime: new Date().toString(),
         photoURI: photoURI,
     }
@@ -78,13 +80,21 @@ const LogSuccessScreen = ({navigation, route}) => {
     // View --------------------------------
     return (
         <View style={styles.container}>
-            <Text>Well done!!!!!!!</Text>
-            <Text>User: {find?.userID}</Text>
-            <Text>Find ID: {find?.findID}</Text>
-            <Text>Cache: {find?.cacheID}</Text>
-            <Text>Found on {find?.findDateTime }</Text>
-            <Text>Photo saved: {find?.photoURI ? "Yes" : "No"}</Text>
-            <Text>Total finds: {userFindCount}</Text>
+            <View>
+                <Image 
+                    source={require("../../../assets/WellDone.png")} 
+                    style={styles.image}
+                />
+            </View>
+            <View>
+                <Text style={styles.mainText}>You have found {find?.cacheName}</Text>
+                <Text style={styles.pointsText}>Points earned: {find?.cachePoints}</Text>
+                <View style={styles.detailsContainer}>
+                    <Text style={styles.detailsText}>Total finds: {userFindCount}</Text>
+                    <Text style={styles.detailsText}>Photo saved: {find?.photoURI ? "Yes" : "No"}</Text>
+                    <Text style={styles.detailsText}>Found on {find?.findDateTime}</Text>
+                </View>
+            </View>
         </View>
     );
 };
@@ -92,10 +102,45 @@ const LogSuccessScreen = ({navigation, route}) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: "center",
+        justifyContent: "flex-start",
         alignItems: "center",
         padding: 20,
-    }
+        backgroundColor: "#fff",
+    },
+    image: {
+        width: 400,
+        height: 300,
+        resizeMode: "contain",
+        alignSelf: "center",
+    },
+    mainText: {
+        fontSize: 25,
+        fontWeight: "700",
+        color: "#346739", 
+        textAlign: "center",
+        marginBottom: 10,
+    },
+    pointsText: {
+        fontSize: 23,          
+        fontWeight: "600",
+        color: "#5A2D0C",      
+        textAlign: "center",
+        marginBottom: 20,
+    },
+    detailsContainer: {
+        marginTop: 0,
+        width: "100%",
+        padding: 16,
+        backgroundColor: "#9FCB98",
+        borderColor: "#79AE6F",
+        borderRadius: 8,
+        borderWidth: 1,
+    },
+    detailsText: {
+        fontSize: 18,          
+        color: "#00050f", 
+        marginBottom: 4,
+    },
 });
 
 export default LogSuccessScreen;
