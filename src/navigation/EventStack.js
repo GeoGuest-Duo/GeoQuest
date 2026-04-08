@@ -7,7 +7,9 @@ const Stack = createNativeStackNavigator();
 
 const EventStack = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{ headerBackButtonDisplayMode: "minimal", }}
+    >
       <Stack.Screen
         name="Events"
         component={EventScreen}
