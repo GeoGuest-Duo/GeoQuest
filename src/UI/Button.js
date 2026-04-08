@@ -24,7 +24,6 @@ export const ButtonTray = ({ children }) => {
   // View --------------------------------
   return <View style={styles.buttonTray}>{children}</View>;
 };
-
 const styles = StyleSheet.create({
   buttonTray: {
     flexDirection: "row",
@@ -33,12 +32,15 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     width: "100%",
   },
+
   button: {
     minHeight: 55,
     borderWidth: 1,
     borderRadius: 10,
-    borderColor: "grey",
-    backgroundColor: "white",
+
+    borderColor: "#290847ff",
+    backgroundColor: "#f2c1d1",
+
     alignItems: "center",
     justifyContent: "center",
     paddingVertical: 14,
@@ -46,11 +48,16 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     gap: 8,
   },
+
   label: {
     fontSize: 16,
+    color: "#ffffff",
+    fontWeight: "600",
   },
+
   pressedButton: {
-    backgroundColor: "azure",
+    backgroundColor: "#30055f",
     elevation: 5,
   },
 });
+export default Button;

@@ -2,7 +2,6 @@ import React from "react";
 import { StyleSheet, Text, View, Image, ScrollView } from "react-native";
 import { Button } from "../UI/Button";
 import { useAuth } from "../context/AuthContext";
-
 const ProfileScreen = ({ navigation }) => {
   const { user, logout } = useAuth();
 
@@ -88,7 +87,7 @@ const ProfileScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   scrollContent: {
     flexGrow: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#ffffffff",
     paddingTop: 24,
     paddingBottom: 40,
   },
@@ -103,7 +102,7 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     textAlign: "center",
     marginBottom: 20,
-    color: "#30055f92", // purple
+    color: "#41136cff",
   },
 
   card: {
@@ -112,10 +111,10 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     paddingHorizontal: 16,
     borderWidth: 1,
-    borderColor: "#E3E3E3",
+    borderColor: "#41136cff",
     borderRadius: 16,
     marginBottom: 18,
-    backgroundColor: "#FAFAFA",
+    backgroundColor: "#F2C1D1", // the Avatar
   },
 
   avatar: {
@@ -129,7 +128,7 @@ const styles = StyleSheet.create({
     width: 90,
     height: 90,
     borderRadius: 45,
-    backgroundColor: "#A29BFE",
+    backgroundColor: "#0b055eff",
     alignItems: "center",
     justifyContent: "center",
     marginBottom: 12,
@@ -138,7 +137,7 @@ const styles = StyleSheet.create({
   avatarPlaceholderText: {
     fontSize: 26,
     fontWeight: "700",
-    color: "#555",
+    color: "#ffffff",
   },
 
   name: {
@@ -151,7 +150,7 @@ const styles = StyleSheet.create({
 
   username: {
     fontSize: 15,
-    color: "#777",
+    color: "#41136cff",
     textAlign: "center",
   },
 
@@ -167,22 +166,22 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingVertical: 16,
     borderWidth: 1,
-    borderColor: "#E3E3E3",
+    borderColor: "#41136cff",
     borderRadius: 12,
-    backgroundColor: "#FAFAFA",
+    backgroundColor: "#F2C1D1",
     marginHorizontal: 4,
   },
 
   statNumber: {
     fontSize: 22,
     fontWeight: "700",
-    color: "#111",
+    color: "#41136cff",
     marginBottom: 4,
   },
 
   statLabel: {
     fontSize: 14,
-    color: "#666",
+    color: "#41136cff",
   },
 
   actions: {
@@ -200,5 +199,4 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
 });
-
 export default ProfileScreen;
