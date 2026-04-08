@@ -18,6 +18,7 @@ const TabNavigator = () => {
         component={HomeStack}
         options={{
           title: "Home",
+          headerShown: false,
           tabBarIcon: () => <Icons.Home />,
         }}
       />

@@ -13,35 +13,41 @@ const HomeStack = () => {
   return (
     <Stack.Navigator
       initialRouteName="HomeScreen"
-      screenOptions={{ headerShown: false }}>
-      <Stack.Screen
-        name="HomeScreen"
-        component={HomeScreen}
-        options={{ title: "Home" }}
-      />
+          screenOptions={{
+              headerShown: true,
+              headerBackButtonDisplayMode: "minimal",
+          }}>
+            <Stack.Screen
+                name="HomeScreen"
+                component={HomeScreen}
+                options={{
+                    title: "Home",
+                    headerShown: false,
+                 }}
+            />
 
             <Stack.Screen
                 name="ViewCacheScreen"
                 component={ViewCacheScreen}
-                options={{ title: "View cache details " }}
+                options={{ title: "Cache Details " }}
             />
 
             <Stack.Screen
                 name="CacheNavigationScreen"
                 component={CacheNavigationScreen}
-                options={{ title: "Navigate to the selected cache" }}
+                options={{ title: "Find Cache" }}
             />
 
             <Stack.Screen
                 name="LogCacheScreen"
                 component={LogCacheScreen}
-                options={{ title: "Log cache" }}
+                options={{ title: "Log Cache" }}
             />
           
            <Stack.Screen
                 name="LogSuccessScreen"
                 component={LogSuccessScreen}
-                options={{ title: "Successful" }}
+                options={{ title: "Cache Found!"}}
             />
         </Stack.Navigator>
     );
