@@ -48,76 +48,115 @@ const SignupScreen = ({ navigation }) => {
     <View style={styles.container}>
       <Text style={styles.title}>Create Account</Text>
 
-      <TextInput
-        placeholder="First Name"
-        value={firstName}
-        onChangeText={setFirstName}
-        style={styles.input}
-      />
+      <View style={styles.card}>
+        <TextInput
+          placeholder="First Name"
+          placeholderTextColor="#777"
+          value={firstName}
+          onChangeText={setFirstName}
+          style={styles.input}
+        />
 
-      <TextInput
-        placeholder="Last Name"
-        value={lastName}
-        onChangeText={setLastName}
-        style={styles.input}
-      />
+        <TextInput
+          placeholder="Last Name"
+          placeholderTextColor="#777"
+          value={lastName}
+          onChangeText={setLastName}
+          style={styles.input}
+        />
 
-      <TextInput
-        placeholder="Phone"
-        value={phone}
-        onChangeText={setPhone}
-        style={styles.input}
-      />
+        <TextInput
+          placeholder="Phone"
+          placeholderTextColor="#777"
+          value={phone}
+          onChangeText={setPhone}
+          style={styles.input}
+        />
 
-      <TextInput
-        placeholder="Username"
-        value={username}
-        onChangeText={setUsername}
-        style={styles.input}
-      />
+        <TextInput
+          placeholder="Username"
+          placeholderTextColor="#777"
+          value={username}
+          onChangeText={setUsername}
+          style={styles.input}
+        />
 
-      <TextInput
-        placeholder="Password"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-        style={styles.input}
-      />
+        <TextInput
+          placeholder="Password"
+          placeholderTextColor="#777"
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry
+          style={styles.input}
+        />
 
-      <TextInput
-        placeholder="Image URL (optional)"
-        value={imageURL}
-        onChangeText={setImageURL}
-        style={styles.input}
-      />
+        <TextInput
+          placeholder="Image URL (optional)"
+          placeholderTextColor="#777"
+          value={imageURL}
+          onChangeText={setImageURL}
+          style={styles.input}
+        />
 
-      <Button label="Sign Up" onClick={handleSignup} />
+        <View style={styles.buttonContainer}>
+          <Button label="Sign Up" onClick={handleSignup} />
+        </View>
 
-      <Button
-        label="Back to Login"
-        onClick={() => navigation.navigate("LoginScreen")}
-      />
+        <View style={styles.secondaryButtonContainer}>
+          <Button
+            label="Back to Login"
+            onClick={() => navigation.navigate("LoginScreen")}
+          />
+        </View>
+      </View>
     </View>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+    backgroundColor: "#FFFFFF",
     justifyContent: "center",
+    paddingHorizontal: 24,
   },
+
   title: {
-    fontSize: 22,
-    fontWeight: "bold",
-    marginBottom: 20,
+    fontSize: 30,
+    fontWeight: "700",
+    color: "#346739",
     textAlign: "center",
+    marginBottom: 24,
   },
+
+  card: {
+    backgroundColor: "#F2EDC2",
+    borderRadius: 22,
+    padding: 20,
+    shadowColor: "#000",
+    shadowOpacity: 0.08,
+    shadowRadius: 10,
+    elevation: 4,
+  },
+
   input: {
+    backgroundColor: "#FFFFFF",
     borderWidth: 1,
-    padding: 10,
+    borderColor: "#D9D9D9",
+    borderRadius: 14,
+    paddingVertical: 14,
+    paddingHorizontal: 16,
+    fontSize: 16,
+    color: "#333333",
+    marginBottom: 12,
+  },
+
+  buttonContainer: {
+    marginTop: 6,
     marginBottom: 10,
-    borderRadius: 5,
+  },
+
+  secondaryButtonContainer: {
+    marginTop: 2,
   },
 });
 
