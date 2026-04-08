@@ -318,7 +318,7 @@ const styles = StyleSheet.create({
     borderColor: "#ddd",
     borderRadius: 12,
     marginBottom: 20,
-    backgroundColor: "#fafafa",
+    backgroundColor: "#F2EDC2",
   },
 
   // Label text

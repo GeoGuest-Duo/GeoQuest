@@ -1,5 +1,11 @@
 import { useEffect, useState } from "react";
-import { ActivityIndicator, Pressable, StyleSheet, Text, View } from "react-native";
+import {
+  ActivityIndicator,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import useStore from "../../store/useStore";
 import MapView, { Marker } from "react-native-maps";
@@ -8,20 +14,20 @@ import { useLocation } from "../../context/LocationContext";
 
 const HomeScreen = ({ navigation }) => {
   // Initialisations ---------------------
-  const cachesEndpoint = "https://mark0s.com/geoquest/v1/api/caches?key=16gv8f";  // GeoQuest API endpoint for caches
-  
+  const cachesEndpoint = "https://mark0s.com/geoquest/v1/api/caches?key=16gv8f"; // GeoQuest API endpoint for caches
+
   // State -------------------------------
   // Get the logged-in user from storage
-  const [user] = useStore("loggedinUser", null); 
+  const [user] = useStore("loggedinUser", null);
 
-  // Caches states 
-  const [caches, setCaches] = useState([]);   // Store all caches loaded from the GeoQuest API
-  const [selectedCache, setSelectedCache] = useState(null);   // To store the selectedCach details 
-  const [isLoadingCaches, setIsLoadingCaches] = useState(true);  // Store cache loading state
-  const [cacheErrorMessage, setCacheErrorMessage] = useState(""); 
+  // Caches states
+  const [caches, setCaches] = useState([]); // Store all caches loaded from the GeoQuest API
+  const [selectedCache, setSelectedCache] = useState(null); // To store the selectedCach details
+  const [isLoadingCaches, setIsLoadingCaches] = useState(true); // Store cache loading state
+  const [cacheErrorMessage, setCacheErrorMessage] = useState("");
 
   // Location
-  const { location, isLoadingLocation, errorMessage } = useLocation()
+  const { location, isLoadingLocation, errorMessage } = useLocation();
 
   // Effect ------------------------------
   // Load caches from the GeoQuest API
@@ -54,29 +60,32 @@ const HomeScreen = ({ navigation }) => {
   };
 
   // Loading / error states --------------
-    if (errorMessage || cacheErrorMessage) {
-      return (
-        <View style={styles.centerContainer}>
-          <Text>{errorMessage || cacheErrorMessage}</Text>
-        </View>
-      );
-    }
-  
-    if (!location || isLoadingLocation || isLoadingCaches) {
-      return (
-        <View style={styles.centerContainer}>
-          <ActivityIndicator size="large" />
-          <Text style={styles.loadingText}>Loading map...</Text>
-        </View>
-      );
-    }
-  
+  if (errorMessage || cacheErrorMessage) {
+    return (
+      <View style={styles.centerContainer}>
+        <Text>{errorMessage || cacheErrorMessage}</Text>
+      </View>
+    );
+  }
+
+  if (!location || isLoadingLocation || isLoadingCaches) {
+    return (
+      <View style={styles.centerContainer}>
+        <ActivityIndicator size="large" />
+        <Text style={styles.loadingText}>Loading map...</Text>
+      </View>
+    );
+  }
+
   // View --------------------------------
   return (
     <SafeAreaView style={styles.container}>
       {/* Welcome title */}
       <View>
-        <Text style={styles.header}> Hi {user?.UserFirstname}, ready for an adventure?</Text>
+        <Text style={styles.header}>
+          {" "}
+          Hi {user?.UserFirstname}, ready for an adventure?
+        </Text>
       </View>
 
       {/* Full interactive map centered on the user's current location */}
@@ -89,7 +98,6 @@ const HomeScreen = ({ navigation }) => {
           longitudeDelta: 0.02,
         }}
         showsUserLocation={true}>
-        
         {/* Marker showing the user's current location */}
         <Marker
           coordinate={{
@@ -113,23 +121,25 @@ const HomeScreen = ({ navigation }) => {
         ))}
       </MapView>
 
-      {
-        selectedCache && (
-          <Pressable
-            style={styles.cacheTile}
-            onPress={() => navigation.navigate("ViewCacheScreen", { cache: selectedCache })}
-          >
-            <View style={styles.tileContent}>
-              <View style={{flex: 1}}>
-                <Text style={styles.cacheTitle}>{selectedCache.CacheName}</Text>
-                <Text style={styles.cacheDescription} numberOfLines={2}> {selectedCache.CacheDescription}</Text>
-              </View>
-
-              <Icons.ChevronRight/>
+      {selectedCache && (
+        <Pressable
+          style={styles.cacheTile}
+          onPress={() =>
+            navigation.navigate("ViewCacheScreen", { cache: selectedCache })
+          }>
+          <View style={styles.tileContent}>
+            <View style={{ flex: 1 }}>
+              <Text style={styles.cacheTitle}>{selectedCache.CacheName}</Text>
+              <Text style={styles.cacheDescription} numberOfLines={2}>
+                {" "}
+                {selectedCache.CacheDescription}
+              </Text>
             </View>
-          </Pressable>
-        )
-      }
+
+            <Icons.ChevronRight />
+          </View>
+        </Pressable>
+      )}
     </SafeAreaView>
   );
 };
@@ -143,9 +153,9 @@ const styles = StyleSheet.create({
     fontSize: 26,
     fontWeight: "bold",
     color: "#5A2D0C",
-    textAlign: "center",  
+    textAlign: "center",
     paddingHorizontal: 16,
-    marginTop: 18,
+    marginTop: 25,
     marginBottom: 18,
   },
   map: {
@@ -185,7 +195,7 @@ const styles = StyleSheet.create({
   tileContent: {
     flexDirection: "row",
     alignItems: "center",
-  }
+  },
 });
 
 export default HomeScreen;

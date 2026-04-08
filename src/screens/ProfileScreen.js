@@ -75,7 +75,7 @@ const ProfileScreen = ({ navigation }) => {
       contentContainerStyle={styles.scrollContent}
       showsVerticalScrollIndicator={false}>
       <View style={styles.container}>
-        <Text style={styles.title}>My Profile</Text>
+        {/*<Text style={styles.title}>My Profile</Text >*/}
 
         <View style={styles.card}>
           {user?.UserImageURL ? (
