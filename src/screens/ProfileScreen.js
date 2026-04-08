@@ -1,10 +1,77 @@
 import React from "react";
+import { useFocusEffect } from "@react-navigation/native";
+import { useCallback, useEffect, useState } from "react";
 import { StyleSheet, Text, View, Image, ScrollView } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Button } from "../UI/Button";
 import { useAuth } from "../context/AuthContext";
-const ProfileScreen = ({ navigation }) => {
-  const { user, logout } = useAuth();
 
+const ProfileScreen = ({ navigation }) => {
+  // Initialisations ---------------------
+  const { user, logout } = useAuth();
+  const cachesEndpoint = "https://mark0s.com/geoquest/v1/api/caches?key=16gv8f";
+
+  // State -------------------------------
+  const [findCount, setFindCount] = useState(0);    // To display the number of finds by the user
+  const [points, setPoints] = useState(0);          // To display the number of points earned
+
+
+  // Handlers ----------------------------
+  useFocusEffect(
+    useCallback(() => {
+      //
+      const loadUserStats = async () => {
+        try {
+          // Gets all saved finds from AsyncStorage 
+          const storedFinds = await AsyncStorage.getItem("finds");
+
+          // To convert stored string to arrays 
+          const finds = storedFinds ? JSON.parse(storedFinds) : [];
+
+          // Filter out finds for the current loggedinUser
+          const userFinds = finds.filter(
+            (find) => find.userID === user?.UserID
+          );
+
+          // save number of finds into state
+          setFindCount(userFinds.length);
+
+          // Fetch all caches from the API
+          const response = await fetch(cachesEndpoint);
+          const caches = await response.json();
+
+          // Calculate total points for the current loggedinUse
+          // .reduce takes an array and turn it into a single value
+          // sum = running total; find = current item
+          const totalPoints = userFinds.reduce((sum, find) => {
+            const matchedCache = caches.find(
+              (cache) => Number(cache.CacheID) === Number(find.cacheID)
+            );
+
+            // If cache exits, use its points else use 0
+            return sum + (matchedCache ? Number(matchedCache.CachePoints) : 0);
+          }, 0);
+
+          // To save totalPoints
+          setPoints(totalPoints);
+
+          console.log("Current user finds:", userFinds);
+          console.log("Total points: ", totalPoints);
+        } catch (error) {
+          console.log("Error loading find count", error);
+        }
+      };
+      
+      if (user) {
+        loadUserStats();
+      }
+      
+      return () => { };
+
+    }, [user])
+  );
+
+  // View --------------------------------
   return (
     <ScrollView
       contentContainerStyle={styles.scrollContent}
@@ -33,12 +100,12 @@ const ProfileScreen = ({ navigation }) => {
 
         <View style={styles.statsRow}>
           <View style={styles.statBox}>
-            <Text style={styles.statNumber}>0</Text>
+            <Text style={styles.statNumber}>{points}</Text>
             <Text style={styles.statLabel}>Points</Text>
           </View>
 
           <View style={styles.statBox}>
-            <Text style={styles.statNumber}>0</Text>
+            <Text style={styles.statNumber}>{findCount}</Text>
             <Text style={styles.statLabel}>Finds</Text>
           </View>
 
