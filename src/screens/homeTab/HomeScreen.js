@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { ActivityIndicator, Pressable, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import useStore from "../../store/useStore";
 import MapView, { Marker } from "react-native-maps";
 import Icons from "../../UI/Icons";
@@ -72,9 +73,11 @@ const HomeScreen = ({ navigation }) => {
   
   // View --------------------------------
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       {/* Welcome title */}
-      <Text style={styles.title}> Hi {user?.UserFirstname}, ready for an adventure?</Text>
+      <View>
+        <Text style={styles.header}> Hi {user?.UserFirstname}, ready for an adventure?</Text>
+      </View>
 
       {/* Full interactive map centered on the user's current location */}
       <MapView
@@ -127,22 +130,23 @@ const HomeScreen = ({ navigation }) => {
           </Pressable>
         )
       }
-    </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 10,
-    backgroundColor: "#fff",
+    backgroundColor: "#ffff",
   },
-  title: {
+  header: {
     fontSize: 26,
     fontWeight: "bold",
-    marginTop: 5,
-    marginBottom: 8,
-    textAlign: "center",
+    color: "#5A2D0C",
+    textAlign: "center",  
+    paddingHorizontal: 16,
+    marginTop: 18,
+    marginBottom: 18,
   },
   map: {
     flex: 1,
