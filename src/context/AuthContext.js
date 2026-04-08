@@ -9,7 +9,7 @@ const AuthProvider = ({ children }) => {
   // State -------------------------------
   // useState stores values
   const [user, setUser] = useState(null);
-  const [isUsersLoading, setIsUserLoading] = useState(true);
+  const [isUserLoading, setIsUserLoading] = useState(true);
 
   // Handlers ----------------------------
   // Load user from storage on app start
@@ -65,7 +65,7 @@ const AuthProvider = ({ children }) => {
   // View --------------------------------
   return (
     <AuthContext.Provider
-      value={{ user, isUsersLoading, login, logout, updateUser }}>
+      value={{ user, isUserLoading, login, logout, updateUser }}>
       {children}
     </AuthContext.Provider>
   );

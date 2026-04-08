@@ -5,6 +5,8 @@ import { useLocation } from '../../context/LocationContext';
 import { calculateDistanceInKm } from '../../utils/CalculateDistanceInKm';
 import * as ImagePicker from 'expo-image-picker';
 
+const DEV_MODE = true;
+
 const LogCacheScreen = ({navigation, route}) => {
     // Initialisations ---------------------
     const { cache } = route.params; 
@@ -25,7 +27,7 @@ const LogCacheScreen = ({navigation, route}) => {
         );
 
         // Too far
-        if (distanceInKm > 0.1) {
+        if (!DEV_MODE && distanceInKm > 0.1) {
             Alert.alert(
                 "Too far away",
                 "Almost there! Step a bit closer (within 100 metres) to log your find."
